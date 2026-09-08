@@ -1,11 +1,10 @@
 'use client';
 
-import { FC, Fragment, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { useUser } from '@gitroom/frontend/components/layout/user.context';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { MenuItem } from '@gitroom/frontend/components/new-layout/menu-item';
-import { StudioMenu } from '@gitroom/frontend/components/new-layout/studio-menu';
 
 interface MenuItemInterface {
   name: string;
@@ -101,6 +100,41 @@ export const useMenuItem = () => {
         </svg>
       ),
       path: '/media',
+    },
+    {
+      name: 'Studio',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="21"
+          height="21"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M15 4 4 15l5 5L20 9l-5-5Z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M13.5 5.5 18.5 10.5"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M5 4V1M5 4v3M3.5 4h3M18.5 16v-2.5M18.5 16v2.5M17 16h3"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      path: '/studio',
     },
     {
       name: t('plugs', 'Plugs'),
@@ -295,16 +329,12 @@ export const TopMenu: FC = () => {
                 return true;
               })
               .map((item, index) => (
-                <Fragment key={item.name}>
-                  <MenuItem
-                    path={item.path}
-                    label={item.name}
-                    icon={item.icon}
-                  />
-                  {/* Studio sits directly after Media - it is a flyout, not a
-                      link, so it cannot live in the firstMenu array. */}
-                  {item.path === '/media' && <StudioMenu />}
-                </Fragment>
+                <MenuItem
+                  path={item.path}
+                  label={item.name}
+                  icon={item.icon}
+                  key={item.name}
+                />
               ))
         }
       </div>

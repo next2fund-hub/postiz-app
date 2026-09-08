@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { STUDIO_LINKS } from '@gitroom/frontend/components/new-layout/studio-menu';
+import { STUDIO_LINKS } from '@gitroom/frontend/components/new-layout/studio.sidebar';
 
 /**
  * Placeholder shell for the Studio sections.
