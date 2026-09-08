@@ -1,10 +1,11 @@
 'use client';
 
-import { FC, ReactNode } from 'react';
+import { FC, Fragment, ReactNode } from 'react';
 import { useUser } from '@gitroom/frontend/components/layout/user.context';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { MenuItem } from '@gitroom/frontend/components/new-layout/menu-item';
+import { StudioMenu } from '@gitroom/frontend/components/new-layout/studio-menu';
 
 interface MenuItemInterface {
   name: string;
@@ -294,12 +295,16 @@ export const TopMenu: FC = () => {
                 return true;
               })
               .map((item, index) => (
-                <MenuItem
-                  path={item.path}
-                  label={item.name}
-                  icon={item.icon}
-                  key={item.name}
-                />
+                <Fragment key={item.name}>
+                  <MenuItem
+                    path={item.path}
+                    label={item.name}
+                    icon={item.icon}
+                  />
+                  {/* Studio sits directly after Media - it is a flyout, not a
+                      link, so it cannot live in the firstMenu array. */}
+                  {item.path === '/media' && <StudioMenu />}
+                </Fragment>
               ))
         }
       </div>
