@@ -90,6 +90,14 @@ class CloudflareStorage implements IUploadProvider {
         ACL: 'public-read',
         Key: `${id}.${extension}`,
         Body: file.buffer,
+        // Without this R2 serves every object as application/octet-stream.
+        // Local storage never had the problem because nginx infers the type
+        // from the file extension, so it only appears after switching to R2.
+        // It matters: Instagram and Facebook publish by FETCHING the media URL,
+        // and a video served as octet-stream can be rejected. Browsers also
+        // download rather than preview, breaking Media library thumbnails.
+        // uploadSimple() already sets ContentType; uploadFile() was the gap.
+        ContentType: file.mimetype,
       });
 
       await this._client.send(command);
