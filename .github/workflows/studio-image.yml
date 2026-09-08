@@ -1,0 +1,83 @@
+---
+# Builds the Postiz image for THIS fork and pushes it to GHCR, so Railway can
+# just pull it. Builds run on GitHub's runners (free for public repos) rather
+# than on Railway, which keeps deploys fast and the Railway bill unchanged.
+#
+# Differences from upstream build-containers.yml, deliberately:
+#   - amd64 ONLY. Railway runs amd64, so building arm64 doubles the build time
+#     for an image nothing will ever pull.
+#   - no multi-arch manifest step, for the same reason.
+#   - triggers on pushes to `studio`, not on tags.
+#
+# The `studio` branch is based on tag v2.11.3 -- the last release that does NOT
+# require Temporal. Do not rebase it onto main.
+
+name: Build Studio Image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - studio
+    paths-ignore:
+      - '**.md'
+      - 'tools/**'
+
+concurrency:
+  group: studio-image
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push
+        env:
+          IMAGE: ghcr.io/${{ github.repository_owner }}/postiz-app
+        run: |
+          SHA_TAG="${GITHUB_SHA::12}"
+          docker buildx build \
+            --platform linux/amd64 \
+            -f Dockerfile.dev \
+            --build-arg NEXT_PUBLIC_VERSION=studio-${SHA_TAG} \
+            --provenance=false --sbom=false \
+            --cache-from "type=gha" \
+            --cache-to "type=gha,mode=max" \
+            -t "${IMAGE}:studio" \
+            -t "${IMAGE}:studio-${SHA_TAG}" \
+            --push \
+            .
+
+      - name: Summary
+        env:
+          IMAGE: ghcr.io/${{ github.repository_owner }}/postiz-app
+        run: |
+          SHA_TAG="${GITHUB_SHA::12}"
+          {
+            echo "### Image pushed"
+            echo ""
+            echo '```'
+            echo "${IMAGE}:studio"
+            echo "${IMAGE}:studio-${SHA_TAG}"
+            echo '```'
+            echo ""
+            echo "Point Railway at \`${IMAGE}:studio\`."
+            echo "AFTER DEPLOY, run the workers check (RAILWAY-DEPLOY.md Bug 4)."
+          } >> "$GITHUB_STEP_SUMMARY"
