@@ -28,6 +28,11 @@ import re
 import sys
 
 MODEL = "claude-opus-5"
+
+# Padding around the snapped boundaries. The tail is deliberately larger: a clip
+# that runs half a second long is fine, one that swallows the last word is not.
+LEAD_PAD = 0.25
+TAIL_PAD = 0.60
 SECRETS = r"C:\Users\Brian\.secrets\content.env"
 
 
@@ -60,19 +65,27 @@ def load_words(path):
 
 
 def to_lines(words, max_gap=0.8, max_words=18):
-    """Group words into timestamped lines Claude can reference precisely."""
+    """Group words into timestamped lines Claude can reference precisely.
+
+    A line's END is the START OF THE NEXT WORD, not the start of its own last
+    word. Using the last word's start time - which is what this did originally -
+    makes every line end one word too early, so a clip cut on that timestamp
+    chops off the final word. That was the "it cuts off at the end" problem: the
+    model picked the end honestly, the timestamps were wrong.
+    """
     lines, cur, start = [], [], None
     for i, (t, w) in enumerate(words):
         if start is None:
             start = t
         cur.append(w)
-        nxt = words[i + 1][0] if i + 1 < len(words) else t + 1.0
+        nxt = words[i + 1][0] if i + 1 < len(words) else t + 0.9
         ends = w.rstrip().endswith((".", "?", "!"))
         if ends or (nxt - t) > max_gap or len(cur) >= max_words:
-            lines.append((start, t, " ".join(cur)))
+            # cap the tail so a long silence after the line is not swallowed
+            lines.append((start, min(nxt, t + 1.2), " ".join(cur)))
             cur, start = [], None
     if cur:
-        lines.append((start, words[-1][0], " ".join(cur)))
+        lines.append((start, words[-1][0] + 0.9, " ".join(cur)))
     return lines
 
 
@@ -169,11 +182,35 @@ def main():
         sys.exit(f"no JSON in response:\n{text[:600]}")
     data = json.loads(m.group(0))
 
+    # Snap to real line boundaries. Claude answers in transcript time, but a
+    # value a fraction of a second early still clips the last word - so pull the
+    # start back to the beginning of the line it lands in, push the end forward
+    # to the end of the line it lands in, and add a short tail so the final word
+    # is fully audible before the cut.
+    starts = [ln[0] for ln in lines]
+    ends = [ln[1] for ln in lines]
+
+    def snap_start(v):
+        prior = [x for x in starts if x <= v + 0.35]
+        return max(prior) if prior else v
+
+    def snap_end(v):
+        """Push to the end of the line we land in, then add a tail that stops
+        SHORT OF THE NEXT LINE. Padding blindly bleeds the first word of the
+        following sentence into the clip, which sounds like a mistake."""
+        after = [x for x in ends if x >= v - 0.35]
+        if not after:
+            return v
+        e = min(after)
+        nxt = [x for x in starts if x > e]
+        limit = (min(nxt) - 0.08) if nxt else e + TAIL_PAD
+        return min(e + TAIL_PAD, max(e + 0.05, limit))
+
     clips = []
     for c in data.get("clips", []):
         st, en = float(c["start"]), float(c["end"])
-        st = max(0.0, st)
-        en = min(a.duration, en)
+        st = max(0.0, snap_start(st) - LEAD_PAD)
+        en = min(a.duration, snap_end(en))
         if en - st < a.min_dur or en - st > a.max_dur + 5:
             continue
         clips.append({

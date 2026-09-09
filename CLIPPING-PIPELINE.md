@@ -885,3 +885,37 @@ the blur:
     margin-v 420 -> baseline y 1500  = 108px BELOW the footage
 clip.py now computes the margin from the strip geometry:
     cap_margin = (out_h - strip_h)/2 + strip_h*0.06   -> baseline y 1341
+
+## ENDINGS CUT OFF -- it was a TIMESTAMP bug, not a judgement bug (2026-09-08)
+
+Clips still cut off at the end even after Claude was choosing the moments.
+The model was right; the data it was given was wrong.
+
+pick_moments.to_lines() built each transcript line as:
+
+    lines.append((start, t, " ".join(cur)))     # t = the LAST WORD'S START
+
+So every line shown to Claude ENDED ONE WORD EARLY. It picked an end honestly,
+and the render cut mid-word. A data bug wearing a judgement bug's clothes -
+worth remembering before tuning a model's behaviour again.
+
+### Three fixes
+1. Line end = the NEXT WORD'S START (capped at +1.2s so a long silence after
+   the line is not swallowed).
+2. SNAP the model's answer to real boundaries: starts pull back to a line
+   start, ends push forward to a line end. A fractional-second answer can no
+   longer chop a word.
+3. ASYMMETRIC PADDING - LEAD_PAD 0.25s, TAIL_PAD 0.60s. Running slightly long
+   is fine; swallowing the last word is not. The tail is also capped just short
+   of the next line's start so it does not bleed the following sentence in.
+
+Verified: all test clips now end on complete sentences
+  "Wait, that is bad. Yeah, yeah, that's bad."
+  "That's $21,000, bro."
+  "hit the table one more time, bro. I'm all in."
+
+### A VERIFICATION TRAP (do not repeat)
+Checking "does a line span the cut point" ALWAYS returns true: to_lines()
+produces CONTIGUOUS lines (each ends where the next begins), so every timestamp
+falls inside some line. That test measures nothing. Check instead whether the
+last COMPLETE line inside the clip ends with . ? or !
