@@ -752,3 +752,58 @@ FALSE CUTS. sentence_ends() returns the next word's START time, so a word
 beginning exactly at the clip end gets counted as inside. Use `t < end - 0.05`.
 Also note clips.json "text" is TRUNCATED TO 300 CHARS by clip_text(), so its
 trailing "..." is a display artefact, NOT the clip boundary.
+
+## ACTIVE SPEAKER DETECTION 2026-09-08 (the "swaying" fix)
+
+User: "why is the swaggin side to side, the main person speaking is not focused"
+
+DIAGNOSIS -- measured, not guessed. On the offending clip:
+    faces per sample: min 3, max 6, mean 4.6
+    samples with >1 face: 90/90
+    face centres spread across x = 128 .. 1862 on a 1920 source
+
+The tracker picked "biggest face, else nearest to the last one". With 5
+similar-sized faces that choice FLIPS as sizes fluctuate, so the crop swayed
+between people. IT HAD NO IDEA WHO WAS SPEAKING.
+
+### Mouth-motion speaker detection
+YuNet returns 15 values per face: x,y,w,h + 5 landmarks + score.
+Indices 10..13 are the TWO MOUTH CORNERS. So:
+
+    crop the mouth region -> grayscale -> resize to 24x16 -> normalise
+    (subtract mean, divide by std, so lighting change is not read as speech)
+    energy = mean |patch - recent patches|
+
+A talking mouth changes shape constantly; a listening one barely does. No extra
+model, no extra dependency.
+
+### THE KEY INSIGHT: decide ONCE PER CLIP, do not follow the conversation
+The first attempt switched speaker live, with hysteresis and a 1.5s minimum
+hold. IT STILL SWAYED, because every switch triggers a slow pan, so with a
+switch every couple of seconds the crop never settles.
+
+    live switching: travel 410 px, mean motion 11.4 output px/sample
+    ONE speaker per clip: travel 175 px, mean motion 1.6  <- 7x calmer
+
+analyse() is now TWO PASSES:
+  1. accumulate mouth energy per PERSISTENT TRACK across the whole clip
+  2. pick the track with the highest total, and follow ONLY that person
+
+Clips are ~20s. Real editors CUT between speakers; they do not pan back and
+forth. Holding one subject is far more watchable.
+
+### Also fixed in this pass
+Motion units (see previous section): deadzone and pan speed must be relative to
+CROP width, not source width.
+
+### KNOWN WEAKNESS
+Track identity fragments: ~14 tracks were created for ~6 people, because a face
+moving more than TRACK_DIST_FRAC (6% of width) between samples spawns a new
+track. Energy still aggregates enough to pick a dominant speaker, but tightening
+this would make the choice more reliable. Options: match on landmark geometry
+rather than centre distance, or raise SAMPLE_HZ so faces move less per sample.
+
+### COST
+Render went ~21s -> ~29s per clip: a mouth patch is cropped, normalised and
+compared for EVERY face on EVERY sample. The low-res proxy optimisation (detect
+on 480p, scale crop coords to the master) would more than pay this back.

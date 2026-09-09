@@ -53,6 +53,20 @@ MAX_PAN_FRAC = 0.10  # max pan speed as a fraction of the CROP WIDTH per second.
                      # moment drift exceeded the deadzone, jumping the full
                      # deadzone width in a single sample.
 SWITCH_MARGIN = 1.35 # a rival face must be this much bigger to steal focus
+                     # (only used when nobody is detectably speaking)
+
+# --- active speaker detection ----------------------------------------------
+# With 3-6 faces at a table, "biggest face" is meaningless - the choice flips as
+# sizes fluctuate and the crop sways between people. What matters is WHO IS
+# TALKING. YuNet gives 5 landmarks per face including both mouth corners, so we
+# can watch the mouth region and score how much it is moving.
+SPEAK_HISTORY = 8      # mouth patches kept per face (~1s at SAMPLE_HZ)
+SPEAK_MARGIN = 1.5     # a rival must be this much more active to steal focus
+MIN_HOLD_SEC = 1.5     # never switch speaker faster than this - rapid cuts
+                       # between faces look worse than staying on the wrong one
+MOUTH_PATCH = (24, 16) # normalised mouth crop, w x h
+TRACK_DIST_FRAC = 0.06 # match a face to the previous frame within this
+                       # fraction of frame width
 CONF_THRESH = 0.6
 MIN_FACE_FRAC = 0.028  # ignore faces narrower than this fraction of frame width.
                        # Stops the crop locking onto faces on posters, screens,
@@ -80,6 +94,45 @@ def probe(path):
     return int(st["width"]), int(st["height"]), float(j["format"]["duration"]), fps
 
 
+
+def mouth_energy(frame, mouth, track):
+    """How much this face's mouth is moving.
+
+    Crops the mouth region using YuNet's two mouth-corner landmarks, normalises
+    it to a fixed small patch, and returns the mean absolute difference against
+    recent patches. A talking mouth changes shape constantly; a listening one
+    barely does. This is a cheap stand-in for real audio-visual speaker
+    detection - no extra model, no extra dependency.
+    """
+    rmx, rmy, lmx, lmy = mouth
+    cx, cy = (rmx + lmx) / 2.0, (rmy + lmy) / 2.0
+    half = max(8.0, abs(lmx - rmx))          # mouth width, with a floor
+    x0, x1 = int(cx - half), int(cx + half)
+    y0, y1 = int(cy - half * 0.7), int(cy + half * 0.7)
+    h, w = frame.shape[:2]
+    x0, x1 = max(0, x0), min(w, x1)
+    y0, y1 = max(0, y0), min(h, y1)
+    if x1 - x0 < 4 or y1 - y0 < 4:
+        return 0.0
+
+    patch = cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2GRAY)
+    patch = cv2.resize(patch, MOUTH_PATCH).astype(np.float32)
+    # Normalise brightness so lighting changes are not read as speech.
+    patch -= patch.mean()
+    sd = patch.std()
+    if sd > 1e-6:
+        patch /= sd
+
+    hist = track["patches"]
+    energy = 0.0
+    if hist:
+        energy = float(np.mean([np.abs(patch - p).mean() for p in hist[-3:]]))
+    hist.append(patch)
+    if len(hist) > SPEAK_HISTORY:
+        hist.pop(0)
+    return energy
+
+
 def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
     """Sample frames, track the primary face, return [(t, centre_x), ...]."""
     det = cv2.FaceDetectorYN.create(MODEL, "", (320, 320), CONF_THRESH, 0.3, 5000)
@@ -98,6 +151,8 @@ def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
 
     samples = []          # (t, centre_x or None)
     locked_cx = None      # centre of the face we are currently following
+    tracks = []           # per-person mouth history, matched across samples
+    hold_until = 0.0      # do not switch speaker before this time
     idx = 0
 
     while True:
@@ -117,29 +172,72 @@ def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
         _, faces = det.detect(frame)
 
         cx = None
-        boxes = []
+        dets = []
         if faces is not None and len(faces):
-            # face row: x, y, w, h, [landmarks...], score
             min_w = MIN_FACE_FRAC * w
-            boxes = [(f[0] + f[2] / 2.0, f[2] * f[3])
-                     for f in faces if f[2] >= min_w]
-        if boxes:
-            if locked_cx is None:
-                cx = max(boxes, key=lambda b: b[1])[0]
-            else:
-                # hysteresis: keep following the current subject unless a rival
-                # face is clearly larger. Prevents flapping between two speakers.
-                near = min(boxes, key=lambda b: abs(b[0] - locked_cx))
-                big = max(boxes, key=lambda b: b[1])
-                cx = big[0] if big[1] > near[1] * SWITCH_MARGIN else near[0]
-            locked_cx = cx
+            for f in faces:
+                if f[2] < min_w:
+                    continue
+                dets.append({
+                    "cx": float(f[0] + f[2] / 2.0),
+                    "area": float(f[2] * f[3]),
+                    # landmarks 10..13 are the two mouth corners
+                    "mouth": (float(f[10]), float(f[11]),
+                              float(f[12]), float(f[13])),
+                })
 
-        samples.append((t, cx))
+        if dets:
+            # Match each detection to a persistent track so mouth history and
+            # accumulated speaking time follow a PERSON, not a list slot.
+            tol = TRACK_DIST_FRAC * w
+            for d in dets:
+                best, bestd = None, tol
+                for tr in tracks:
+                    dist = abs(tr["cx"] - d["cx"])
+                    if dist < bestd:
+                        best, bestd = tr, dist
+                if best is None:
+                    best = {"cx": d["cx"], "patches": [], "total": 0.0,
+                            "pos": {}, "area": d["area"]}
+                    tracks.append(best)
+                best["cx"] = d["cx"]
+                best["area"] = d["area"]
+                best["pos"][len(samples)] = d["cx"]
+                best["total"] += mouth_energy(frame, d["mouth"], best)
+
+        samples.append((t, None))       # positions are resolved in pass two
+        continue
 
     cap.release()
 
     if not samples:
         sys.exit("no frames sampled")
+
+    # PASS TWO - pick the dominant speaker for the WHOLE clip and follow only
+    # them.
+    #
+    # Following the live conversation looks terrible: with 3-6 faces the crop
+    # switches every couple of seconds, and because each switch is a slow pan it
+    # never settles - it just sways. Clips are ~20s, so choosing one subject and
+    # holding is far more watchable. Real editors cut between speakers; they do
+    # not pan back and forth.
+    if tracks:
+        best = max(tracks, key=lambda tr: tr["total"])
+        if debug:
+            ranked = sorted((tr["total"] for tr in tracks), reverse=True)[:4]
+            print(f"[autoreframe] {len(tracks)} people, speaking energy "
+                  f"{[round(x, 1) for x in ranked]}", file=sys.stderr)
+        pos = best["pos"]
+        filled_cx, last = [], None
+        for i in range(len(samples)):
+            if i in pos:
+                last = pos[i]
+            filled_cx.append(last)
+        # backfill anything before the speaker first appears
+        first = next((v for v in filled_cx if v is not None), None)
+        samples = [(samples[i][0],
+                    filled_cx[i] if filled_cx[i] is not None else first)
+                   for i in range(len(samples))]
 
     # Fill gaps (no face detected) by holding the last known position; if we
     # never saw a face at all, fall back to centre.
