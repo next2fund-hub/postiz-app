@@ -44,6 +44,22 @@ def run(cmd, **kw):
     return subprocess.run(cmd, capture_output=True, text=True, **kw)
 
 
+def has_anthropic_key():
+    if os.environ.get('ANTHROPIC_API_KEY'):
+        return True
+    sec = os.path.join(os.path.expanduser('~'), '.secrets', 'content.env')
+    if os.path.exists(sec):
+        with open(sec, encoding='utf-8') as fh:
+            return any(l.strip().startswith('ANTHROPIC_API_KEY=') for l in fh)
+    return False
+
+
+def duration_of(path):
+    out = run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+               '-of', 'csv=p=0', path]).stdout.strip()
+    return float(out)
+
+
 def download(url, outdir, height):
     """Full file at high concurrency. NEVER --download-sections: that routes
     through ffmpeg's single-connection downloader, ignores -N, and YouTube
@@ -113,6 +129,14 @@ def main():
     ap.add_argument("--no-scene", action="store_true")
     ap.add_argument("--no-whisper", action="store_true",
                     help="do not fall back to Whisper when captions are missing")
+    ap.add_argument("--no-llm", action="store_true",
+                    help="skip Claude moment selection, heuristics only")
+    ap.add_argument("--context", default="",
+                    help="what the video is - helps Claude pick better moments")
+    ap.add_argument("--min-dur", type=float, default=15.0)
+    ap.add_argument("--max-dur", type=float, default=60.0)
+    ap.add_argument("--fit", action="store_true",
+                    help="WIDE framing: whole frame + blurred fill")
     ap.add_argument("--whisper-model", default="base",
                     help="base = fast (6.4x realtime), small = more accurate")
     a = ap.parse_args()
@@ -158,26 +182,69 @@ def main():
     emit("score", status="start")
     t = time.time()
     clips_json = os.path.join(a.outdir, "clips.json")
-    cmd = [PY, os.path.join(HERE, "score_moments.py"),
-           "--video", video, "--profile", a.profile,
-           "--max-clips", str(a.max_clips), "--min-clips", str(a.min_clips),
-           "--out", clips_json]
-    if caps:
-        cmd += ["--captions", caps]
-    if a.no_scene:
-        cmd += ["--no-scene"]
-    r = run(cmd)
-    if not os.path.exists(clips_json):
-        sys.exit(f"scoring failed:\n{r.stderr[-800:]}")
-    data = json.load(open(clips_json, encoding="utf-8"))
-    clips = data["clips"]
-    log(f"scored {len(clips)} clips in {time.time() - t:.0f}s")
-    emit("score", status="done", clips=len(clips),
-         seconds=round(time.time() - t, 1))
+    # Prefer Claude actually reading the transcript. The heuristic scorer finds
+    # moments that LOOK eventful (question marks, audio peaks) but cannot tell
+    # whether anything interesting was SAID, nor where an exchange begins and
+    # ends. ~$0.15/video. Falls back to heuristics with no key or on failure.
+    return_early = False
+    if caps and not a.no_llm and has_anthropic_key():
+        pm = [PY, os.path.join(HERE, "pick_moments.py"),
+              "--captions", caps, "--duration", str(duration_of(video)),
+              "--max-clips", str(a.max_clips),
+              "--min-dur", str(a.min_dur), "--max-dur", str(a.max_dur),
+              "--out", clips_json]
+        if a.context:
+            pm += ["--context", a.context]
+        r = run(pm)
+        if os.path.exists(clips_json):
+            data = json.load(open(clips_json, encoding="utf-8"))
+            clips = data["clips"]
+            log(f"Claude picked {len(clips)} clips in {time.time() - t:.0f}s")
+            emit("score", status="done", clips=len(clips), engine="claude",
+                 seconds=round(time.time() - t, 1))
+            return_early = True
+        else:
+            log(f"Claude scoring failed, using heuristics: "
+                f"{(r.stderr or '')[-200:]}")
+
+    if not return_early:
+        cmd = [PY, os.path.join(HERE, "score_moments.py"),
+               "--video", video, "--profile", a.profile,
+               "--max-clips", str(a.max_clips), "--min-clips", str(a.min_clips),
+               "--out", clips_json]
+        if caps:
+            cmd += ["--captions", caps]
+        if a.no_scene:
+            cmd += ["--no-scene"]
+        r = run(cmd)
+        if not os.path.exists(clips_json):
+            sys.exit(f"scoring failed:\n{r.stderr[-800:]}")
+        data = json.load(open(clips_json, encoding="utf-8"))
+        clips = data["clips"]
+        log(f"scored {len(clips)} clips in {time.time() - t:.0f}s")
+        emit("score", status="done", clips=len(clips), engine="heuristic",
+             seconds=round(time.time() - t, 1))
 
     # 3. render ------------------------------------------------------------
     rw, rh = (int(v) for v in a.ratio.split(":"))
     out_h = 1920 if rh >= rw else 1080
+    out_w = int(round(out_h * rw / rh)) // 2 * 2
+
+    # In --fit mode the footage is a horizontal STRIP in the middle of the
+    # canvas with blurred fill above and below. A fixed caption margin lands in
+    # the blur, which looks like text floating in a void, so place the captions
+    # just inside the strip's lower edge instead.
+    cap_margin = 420
+    if a.fit:
+        pr = run(["ffprobe", "-v", "error", "-select_streams", "v:0",
+                  "-show_entries", "stream=width,height", "-of", "csv=p=0",
+                  video]).stdout.strip().split(",")
+        try:
+            sw, sh = int(pr[0]), int(pr[1])
+            strip_h = out_w * sh / sw
+            cap_margin = int((out_h - strip_h) / 2 + strip_h * 0.06)
+        except (ValueError, IndexError, ZeroDivisionError):
+            pass
     made = []
 
     for i, c in enumerate(clips, 1):
@@ -193,7 +260,8 @@ def main():
             run([PY, os.path.join(HERE, "captions.py"),
                  "--captions", caps, "--start", str(c["start"]),
                  "--duration", str(c["duration"]), "--out", subs,
-                 "--height", str(out_h)])
+                 "--width", str(out_w), "--height", str(out_h),
+                 "--margin-v", str(cap_margin)])
 
         cmd = [PY, os.path.join(HERE, "autoreframe.py"),
                "--input", video, "--output", out,
@@ -202,6 +270,8 @@ def main():
                "--encoder", a.encoder]
         if subs and os.path.exists(subs):
             cmd += ["--subs", subs]
+        if a.fit:
+            cmd += ["--fit"]
         r = run(cmd)
 
         if os.path.exists(out) and os.path.getsize(out) > 0:

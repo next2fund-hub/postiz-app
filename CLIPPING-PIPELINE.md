@@ -843,3 +843,45 @@ Seven people spanning 1920px CANNOT be made large inside a 1080-wide vertical
 frame. 4:5 (1080x1350) shows them markedly bigger with the same
 everyone-in-frame guarantee, and both Instagram and TikTok accept it.
 Use 9:16 for single-speaker content, 4:5 for panels and group tables.
+
+## CLAUDE MOMENT SELECTION 2026-09-08 -- tools/pick_moments.py
+
+The heuristic scorer finds moments that LOOK eventful (question marks, hook
+words, audio peaks, scene cuts). It cannot tell whether anything INTERESTING
+was said, and it cannot find where an exchange begins and ends. That is why
+clips kept opening mid-thought and stopping before the payoff.
+
+pick_moments.py sends the timestamped transcript to Claude and asks for
+COMPLETE exchanges - setup through payoff, question through answer through
+reaction. Model: claude-opus-5. Streaming (adaptive thinking + a long
+transcript can exceed the non-streaming HTTP timeout).
+
+### Same video, same transcript - top pick
+  heuristic: "Ask chat or shout drink next. Me go from next."
+  CLAUDE   : "You stream on Android?" "Yeah." "What model?" "Apple"  <- caught lying
+  also found: the age/drinking contradiction, and the show's climax
+  ("will the real streamer step forward" - nobody moves)
+
+Durations became 28-51s COMPLETE EXCHANGES instead of fixed ~20s windows,
+because it is selecting conversations rather than peaks.
+
+### MEASURED COST
+  21,224 input + 1,787 output tokens = $0.151 per video on Opus 5
+  ($5/MTok in, $25/MTok out). ~$0.075 on the Batch API - clipping is batch
+  work, nothing is latency sensitive. 20 videos/month = $1.50-3.00.
+  My earlier "10k tokens" estimate was low; a 26-min transcript is ~21k.
+
+### Integration
+clip.py uses Claude when ANTHROPIC_API_KEY is present (env or the secrets
+file), and FALLS BACK to score_moments.py with no key or on any failure.
+  --no-llm    force heuristics
+  --context   "what the video is" -- measurably improves the picks
+
+### CAPTION PLACEMENT IN --fit MODE (bug found by looking at a frame)
+In wide mode the footage is a horizontal STRIP with blurred fill above and
+below. A fixed caption margin lands BELOW the strip, so the text floated in
+the blur:
+    4:5 canvas 1536x1920, strip spans y 528..1392
+    margin-v 420 -> baseline y 1500  = 108px BELOW the footage
+clip.py now computes the margin from the strip geometry:
+    cap_margin = (out_h - strip_h)/2 + strip_h*0.06   -> baseline y 1341
