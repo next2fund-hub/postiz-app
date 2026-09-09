@@ -695,3 +695,60 @@ uncaptioned clips.
 - clip.py has NO GUARD against two runs sharing one --outdir. Doing so fails
   with "WinError 32 ... used by another process" during yt-dlp's
   source.temp.mp4 -> source.mp4 rename. agent.py is safe (work/<job-id>/).
+
+## MOTION + BOUNDARY FIXES 2026-09-08 (found by watching real clips)
+
+User feedback after watching output: "centering off", "image was shaking back
+and forth", "cuts off mid sentence".
+
+### 1. SHAKING -- two compounding bugs
+
+(a) THE DEADZONE SNAPPED. Old code:
+        if abs(v - cur) > dead: cur = v
+    The instant drift exceeded the deadzone it TELEPORTED the crop by the full
+    deadzone width in one sample. Now it EASES at a bounded speed, with
+    hysteresis (start moving outside the deadzone, stop within 25% of it) so it
+    does not stutter at the boundary.
+
+(b) *** UNITS BUG: deadzone and pan speed were measured against SOURCE width,
+    but what the viewer sees is the CROP WINDOW upscaled to 1080. ***
+    On a 1920 source with a 607px crop that made both ~3x too large:
+
+        deadzone  0.035 x 1920 = 67 src px  -> 120 px of 1080 output  (11%!)
+        pan cap   0.10  x 1920 = 192 px/s   -> 341 px/s output (32%/sec!)
+
+    It tolerated huge drift, then panned fast to catch up. MEASURED AFTER
+    switching both to crop_w:
+
+        pan     341 px/s (32%/s)  ->  108 px/s (10%/s)
+        deadzone 120 px (11%)     ->   38 px (3.5%)
+
+    ANY fraction affecting apparent motion must be relative to crop_w, NOT src_w.
+
+(c) CMD_HZ 12 -> 25. ffmpeg's sendcmd sets crop x as a STEP function, so a low
+    command rate makes every change a visible jump.
+
+Also: SAMPLE_HZ 6 -> 8, EMA_ALPHA 0.12 -> 0.08, MEDIAN_WIN 5 -> 7.
+
+### 2. CUTS OFF MID-SENTENCE
+Snapping to ANY pause >= 0.6s was not enough -- people pause mid-thought
+constantly, so clips still ended mid-sentence.
+
+Now snaps to SENTENCE ENDS detected from punctuation (. ? !), which both
+Whisper and YouTube captions carry. sentence_ends() returns the NEXT word's
+start, so the sentence-final word is fully inside the clip.
+
+snap_end() now RUNS ON up to 18s past the target to reach a sentence end
+(user: "its okay if video runs a bit longer, must catch the whole sense").
+Falls back to the LATEST pause in range, then to the raw time.
+LEAD_OUT 12 -> 14.
+
+RESULT on the test video: 0/5 clips ended cleanly -> 4/5. The 5th had no
+sentence end within the window and fell back to a pause, as designed.
+
+### VERIFICATION GOTCHA -- do not repeat this
+Checking "does the clip end on a sentence" with `start <= t <= end` reports
+FALSE CUTS. sentence_ends() returns the next word's START time, so a word
+beginning exactly at the clip end gets counted as inside. Use `t < end - 0.05`.
+Also note clips.json "text" is TRUNCATED TO 300 CHARS by clip_text(), so its
+trailing "..." is a display artefact, NOT the clip boundary.
