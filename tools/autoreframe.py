@@ -61,12 +61,19 @@ SWITCH_MARGIN = 1.35 # a rival face must be this much bigger to steal focus
 # TALKING. YuNet gives 5 landmarks per face including both mouth corners, so we
 # can watch the mouth region and score how much it is moving.
 SPEAK_HISTORY = 8      # mouth patches kept per face (~1s at SAMPLE_HZ)
-SPEAK_MARGIN = 1.5     # a rival must be this much more active to steal focus
-MIN_HOLD_SEC = 1.5     # never switch speaker faster than this - rapid cuts
-                       # between faces look worse than staying on the wrong one
+SPEAK_MARGIN = 2.0     # a rival must be this much more active to steal focus
+MIN_HOLD_SEC = 3.0     # never cut faster than this. At 1.5s the result was 16
+                       # cuts in 22s, which is frantic. A cut every 3-5s is a
+                       # natural editing rhythm.
 MOUTH_PATCH = (24, 16) # normalised mouth crop, w x h
-TRACK_DIST_FRAC = 0.06 # match a face to the previous frame within this
-                       # fraction of frame width
+TRACK_DIST_FRAC = 0.12 # match a face to an existing track within this fraction
+                       # of frame width. Too tight and one person's track BREAKS
+                       # when they move, re-registers as a new id, and that reads
+                       # as a speaker change -> a spurious cut. 0.06 produced 14
+                       # tracks for ~6 people.
+TRACK_TTL = 12         # keep a track alive this many samples after it was last
+                       # seen, so a brief detection dropout does not spawn a new
+                       # identity (and therefore a false cut).
 CONF_THRESH = 0.6
 MIN_FACE_FRAC = 0.028  # ignore faces narrower than this fraction of frame width.
                        # Stops the crop locking onto faces on posters, screens,
@@ -149,9 +156,9 @@ def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
     fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
     every = max(1, int(round(fps / SAMPLE_HZ)))   # run detection every Nth frame
 
-    samples = []          # (t, centre_x or None)
-    locked_cx = None      # centre of the face we are currently following
+    samples = []          # (t, centre_x or None, speaker_id or None)
     tracks = []           # per-person mouth history, matched across samples
+    speaker_id = None     # who we are currently on
     hold_until = 0.0      # do not switch speaker before this time
     idx = 0
 
@@ -172,6 +179,7 @@ def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
         _, faces = det.detect(frame)
 
         cx = None
+        cur_id = None
         dets = []
         if faces is not None and len(faces):
             min_w = MIN_FACE_FRAC * w
@@ -187,9 +195,10 @@ def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
                 })
 
         if dets:
-            # Match each detection to a persistent track so mouth history and
-            # accumulated speaking time follow a PERSON, not a list slot.
+            # Match each detection to a persistent track so mouth history
+            # follows a PERSON, not a slot in the list.
             tol = TRACK_DIST_FRAC * w
+            live = []
             for d in dets:
                 best, bestd = None, tol
                 for tr in tracks:
@@ -197,110 +206,205 @@ def analyse(path, start, duration, crop_w, src_w, src_h, debug=False):
                     if dist < bestd:
                         best, bestd = tr, dist
                 if best is None:
-                    best = {"cx": d["cx"], "patches": [], "total": 0.0,
-                            "pos": {}, "area": d["area"]}
+                    best = {"id": len(tracks), "cx": d["cx"], "patches": [],
+                            "energy": 0.0, "area": d["area"]}
                     tracks.append(best)
                 best["cx"] = d["cx"]
                 best["area"] = d["area"]
-                best["pos"][len(samples)] = d["cx"]
-                best["total"] += mouth_energy(frame, d["mouth"], best)
+                best["seen"] = idx
+                raw = mouth_energy(frame, d["mouth"], best)
+                # smooth the instantaneous energy so one noisy frame cannot
+                # steal focus, but stay responsive enough to catch a new answer
+                best["energy"] = 0.6 * best["energy"] + 0.4 * raw
+                live.append(best)
 
-        samples.append((t, None))       # positions are resolved in pass two
-        continue
+            # retire only tracks unseen for a while - see TRACK_TTL
+            tracks = [tr for tr in tracks
+                      if idx - tr.get("seen", idx) <= TRACK_TTL * every]
+
+            if live:
+                loud = max(live, key=lambda tr: tr["energy"])
+                cur = next((tr for tr in live if tr["id"] == speaker_id), None)
+                if cur is None:
+                    speaker_id, hold_until = loud["id"], t + MIN_HOLD_SEC
+                elif (t >= hold_until
+                      and loud["id"] != speaker_id
+                      and loud["energy"] > cur["energy"] * SPEAK_MARGIN):
+                    speaker_id, hold_until = loud["id"], t + MIN_HOLD_SEC
+                chosen = next((tr for tr in live if tr["id"] == speaker_id), loud)
+                cx = chosen["cx"]
+                cur_id = chosen["id"]
+
+        samples.append((t, cx, cur_id))
 
     cap.release()
 
     if not samples:
         sys.exit("no frames sampled")
 
-    # PASS TWO - pick the dominant speaker for the WHOLE clip and follow only
-    # them.
+    # PASS TWO - smooth WITHIN each speaker, CUT between them.
     #
-    # Following the live conversation looks terrible: with 3-6 faces the crop
-    # switches every couple of seconds, and because each switch is a slow pan it
-    # never settles - it just sways. Clips are ~20s, so choosing one subject and
-    # holding is far more watchable. Real editors cut between speakers; they do
-    # not pan back and forth.
-    if tracks:
-        best = max(tracks, key=lambda tr: tr["total"])
-        if debug:
-            ranked = sorted((tr["total"] for tr in tracks), reverse=True)[:4]
-            print(f"[autoreframe] {len(tracks)} people, speaking energy "
-                  f"{[round(x, 1) for x in ranked]}", file=sys.stderr)
-        pos = best["pos"]
-        filled_cx, last = [], None
-        for i in range(len(samples)):
-            if i in pos:
-                last = pos[i]
-            filled_cx.append(last)
-        # backfill anything before the speaker first appears
-        first = next((v for v in filled_cx if v is not None), None)
-        samples = [(samples[i][0],
-                    filled_cx[i] if filled_cx[i] is not None else first)
-                   for i in range(len(samples))]
-
-    # Fill gaps (no face detected) by holding the last known position; if we
-    # never saw a face at all, fall back to centre.
-    known = [s[1] for s in samples if s[1] is not None]
+    # Panning between speakers was the swaying: with 3-6 faces the subject
+    # changes every few seconds, and a slow pan across the frame never settles.
+    # Real editors CUT between speakers. So each run of samples on one person is
+    # smoothed independently, and the boundary between runs is an instant jump.
+    known = [c for _, c, _ in samples if c is not None]
     if not known:
         if debug:
             print("[autoreframe] no faces found - using centre crop", file=sys.stderr)
-        return [(s[0], src_w / 2.0) for s in samples]
+        return [(t, src_w / 2.0) for t, _, _ in samples]
 
-    filled, last = [], known[0]
-    for tt, cx in samples:
+    # hold position and speaker through frames where detection dropped out
+    filled, last_cx, last_id = [], known[0], None
+    for t, cx, sid in samples:
         if cx is not None:
-            last = cx
-        filled.append((tt, last))
+            last_cx, last_id = cx, sid
+        filled.append((t, last_cx, last_id))
 
-    xs = np.array([c for _, c in filled], dtype=np.float64)
+    # split into runs of the same speaker
+    runs, cur = [], [filled[0]]
+    for row in filled[1:]:
+        if row[2] != cur[-1][2]:
+            runs.append(cur)
+            cur = [row]
+        else:
+            cur.append(row)
+    runs.append(cur)
 
-    # Median filter removes one-off detection spikes before smoothing.
-    if len(xs) >= MEDIAN_WIN:
-        pad = MEDIAN_WIN // 2
-        padded = np.pad(xs, pad, mode="edge")
-        xs = np.array([np.median(padded[i:i + MEDIAN_WIN]) for i in range(len(xs))])
+    if debug:
+        print(f"[autoreframe] {len(tracks)} people, {len(runs)} speaker "
+              f"segments (cuts, not pans)", file=sys.stderr)
 
-    # Exponential moving average, run forward then backward for zero phase lag.
-    def ema(a, alpha):
-        out = np.empty_like(a)
-        acc = a[0]
-        for i, v in enumerate(a):
-            acc = alpha * v + (1 - alpha) * acc
-            out[i] = acc
-        return out
-
-    xs = ema(xs, EMA_ALPHA)
-    xs = ema(xs[::-1], EMA_ALPHA)[::-1]
-
-    # Deadzone + velocity limit.
-    #
-    # Hold still for small drift, and when the subject genuinely moves, EASE
-    # toward them at a bounded speed. The previous version set `cur = v` the
-    # instant drift exceeded the deadzone, which teleported the crop by the full
-    # deadzone width in a single sample - the shaking that showed up on real
-    # footage. Clamping the per-sample step turns that into a smooth pan.
-    dead = DEADZONE_FRAC * crop_w
-    max_step = (MAX_PAN_FRAC * crop_w) / SAMPLE_HZ   # px per sample
-    held = xs.copy()
-    cur = float(xs[0])
-    moving = False
-    for i, v in enumerate(xs):
-        # Hysteresis: start moving once outside the deadzone, keep moving until
-        # essentially on target. Without this it stutters at the boundary.
-        if abs(v - cur) > dead:
-            moving = True
-        elif abs(v - cur) < dead * 0.25:
-            moving = False
-        if moving:
-            delta = v - cur
-            cur += max(-max_step, min(max_step, delta))
-        held[i] = cur
-
-    # Clamp so the crop window never leaves the frame.
+    out = []
     half = crop_w / 2.0
-    held = np.clip(held, half, src_w - half)
-    return list(zip([t for t, _ in filled], held))
+    dead = DEADZONE_FRAC * crop_w
+    max_step = (MAX_PAN_FRAC * crop_w) / SAMPLE_HZ
+
+    for run in runs:
+        xs = np.array([c for _, c, _ in run], dtype=np.float64)
+
+        if len(xs) >= MEDIAN_WIN:
+            pad = MEDIAN_WIN // 2
+            padded = np.pad(xs, pad, mode="edge")
+            xs = np.array([np.median(padded[i:i + MEDIAN_WIN])
+                           for i in range(len(xs))])
+
+        def ema(a, alpha):
+            res = np.empty_like(a)
+            acc = a[0]
+            for i, v in enumerate(a):
+                acc = alpha * v + (1 - alpha) * acc
+                res[i] = acc
+            return res
+
+        if len(xs) > 2:
+            xs = ema(xs, EMA_ALPHA)
+            xs = ema(xs[::-1], EMA_ALPHA)[::-1]
+
+        # Within a speaker the subject barely moves, so hold still unless they
+        # genuinely shift, then ease. No easing ACROSS runs - that is the cut.
+        held = xs.copy()
+        cur_pos = float(xs[0])
+        moving = False
+        for i, v in enumerate(xs):
+            if abs(v - cur_pos) > dead:
+                moving = True
+            elif abs(v - cur_pos) < dead * 0.25:
+                moving = False
+            if moving:
+                cur_pos += max(-max_step, min(max_step, v - cur_pos))
+            held[i] = cur_pos
+
+        held = np.clip(held, half, src_w - half)
+        out.extend(zip([t for t, _, _ in run], held))
+
+    return out
+
+
+def face_extent(path, start, duration, src_w):
+    """Horizontal span covering every face seen during the clip.
+
+    Fitting the WHOLE 1920 frame into a 1080-wide canvas leaves the subjects a
+    small strip. Cropping to the group first makes them substantially larger
+    while still including everyone.
+    """
+    det = cv2.FaceDetectorYN.create(MODEL, "", (320, 320), CONF_THRESH, 0.3, 5000)
+    cap = cv2.VideoCapture(path)
+    if start:
+        cap.set(cv2.CAP_PROP_POS_MSEC, start * 1000.0)
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    every = max(1, int(round(fps / 3.0)))     # 3 Hz is plenty for an extent
+    lo, hi, idx = src_w, 0.0, 0
+    while True:
+        ok, frame = cap.read()
+        if not ok or idx / fps >= duration:
+            break
+        if idx % every:
+            idx += 1
+            continue
+        idx += 1
+        h, w = frame.shape[:2]
+        det.setInputSize((w, h))
+        _, faces = det.detect(frame)
+        if faces is None:
+            continue
+        for f in faces:
+            if f[2] < MIN_FACE_FRAC * w:
+                continue
+            lo = min(lo, float(f[0]))
+            hi = max(hi, float(f[0] + f[2]))
+    cap.release()
+    if hi <= lo:
+        return 0.0, float(src_w)
+    pad = (hi - lo) * 0.12 + 40          # breathing room around the group
+    return max(0.0, lo - pad), min(float(src_w), hi + pad)
+
+
+def render_fit(src, out, start, duration, out_w, out_h, debug, subs=None,
+               extent=None):
+    """WIDE MODE - no crop, no tracking.
+
+    Fits the FULL source width into the vertical frame and fills the rest with a
+    blurred, scaled copy of the same footage. Nobody is ever cut out, so it
+    sidesteps speaker identification entirely.
+
+    This is the right mode for panels, interviews and group tables, where a 9:16
+    crop of a 1920 frame is only ~600px - a third of the width - and picking the
+    wrong third is worse than showing everyone.
+    """
+    tmpdir = tempfile.mkdtemp(prefix="autoreframe_")
+    pre = ""
+    if extent:
+        x0, x1 = extent
+        cw = int(x1 - x0) // 2 * 2
+        if cw > 32:
+            pre = f"crop={cw}:ih:{int(x0) // 2 * 2}:0,"
+    vf = (
+        pre +
+        f"split=2[bg][fg];"
+        f"[bg]scale={out_w}:{out_h}:force_original_aspect_ratio=increase,"
+        f"crop={out_w}:{out_h},boxblur=luma_radius=40:luma_power=2,"
+        f"eq=brightness=-0.12[bgb];"
+        f"[fg]scale={out_w}:-2[fgs];"
+        f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,setsar=1"
+    )
+    if subs and os.path.exists(subs):
+        shutil.copyfile(subs, os.path.join(tmpdir, "subs.ass"))
+        vf += ",subtitles=subs.ass"
+
+    if ENCODER == "nvenc":
+        venc = ["-c:v", "h264_nvenc", "-preset", "p5", "-rc", "vbr", "-cq", "29"]
+        exe = FFMPEG7 if os.path.exists(FFMPEG7) else "ffmpeg"
+    else:
+        venc = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "20"]
+        exe = "ffmpeg"
+
+    cmd = [exe, "-y", "-hide_banner", "-loglevel", "error",
+           "-ss", str(start), "-t", str(duration), "-i", os.path.abspath(src),
+           "-vf", vf, *venc, "-pix_fmt", "yuv420p",
+           "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
+           os.path.abspath(out)]
+    subprocess.run(cmd, cwd=tmpdir, check=True)
 
 
 def render(src, out, start, duration, track, crop_w, crop_h, out_w, out_h, debug, subs=None):
@@ -365,6 +469,13 @@ def main():
     ap.add_argument("--height", type=int, default=1920, help="output height")
     ap.add_argument("--encoder", choices=["x264", "nvenc"], default="x264")
     ap.add_argument("--subs", help="ASS subtitle file to burn in")
+    ap.add_argument("--fit", action="store_true",
+                    help="WIDE mode: fit the whole frame with a blurred "
+                         "background instead of cropping. Best for panels and "
+                         "group shots - nobody gets cut out.")
+    ap.add_argument("--auto-wide", type=int, default=0, metavar="N",
+                    help="use wide mode automatically when more than N faces "
+                         "are typically on screen (0 = off)")
     ap.add_argument("--debug", action="store_true")
     a = ap.parse_args()
 
@@ -394,6 +505,20 @@ def main():
     if a.debug:
         print(f"[autoreframe] src {src_w}x{src_h} {fps:.2f}fps {src_dur:.1f}s", file=sys.stderr)
         print(f"[autoreframe] crop {crop_w}x{crop_h} -> out {out_w}x{out_h}", file=sys.stderr)
+
+    if a.fit:
+        if a.debug:
+            print("[autoreframe] WIDE mode - full frame, blurred fill",
+                  file=sys.stderr)
+        ext = face_extent(a.input, a.start, duration, src_w)
+        if a.debug:
+            print(f"[autoreframe] group extent x {ext[0]:.0f}-{ext[1]:.0f} "
+                  f"of {src_w} ({(ext[1]-ext[0])/src_w*100:.0f}% of width)",
+                  file=sys.stderr)
+        render_fit(a.input, a.output, a.start, duration,
+                   out_w, out_h, a.debug, a.subs, ext)
+        print(a.output)
+        return
 
     track = analyse(a.input, a.start, duration, crop_w, src_w, src_h, a.debug)
     render(a.input, a.output, a.start, duration, track,

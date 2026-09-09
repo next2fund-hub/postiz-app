@@ -807,3 +807,39 @@ rather than centre distance, or raise SAMPLE_HZ so faces move less per sample.
 Render went ~21s -> ~29s per clip: a mouth patch is cropped, normalised and
 compared for EVERY face on EVERY sample. The low-res proxy optimisation (detect
 on 480p, scale crop coords to the master) would more than pay this back.
+
+## WIDE MODE (--fit) 2026-09-08 -- and the honest limits of face tracking
+
+After several rounds of speaker-tracking fixes the framing was STILL wrong.
+Diagnostic (per-face mouth energy, printed on real frames):
+
+    at  6s: [0.55, 0.43, 0.60, 0.73, 0.50]
+    at 12s: [0.58, 0.57, 0.75, 0.75, 0.74]   <- three-way tie
+
+MOUTH-MOTION ENERGY DOES NOT DISCRIMINATE THE SPEAKER. All faces sit in a narrow
+0.43-0.75 band. Cause: each patch is normalised to mean 0 / std 1, which
+destroys the very signal wanted - a mouth opening is a big LUMINANCE change.
+What remains is head movement and compression noise. No tuning fixes this.
+
+Proper fixes need a real audio-visual model (TalkNet-ASD / Light-ASD) or audio
+speaker diarization (pyannote / WhisperX). Both are FREE and run locally; both
+add a torch dependency.
+
+### --fit : sidestep the problem instead of solving it
+Fits the WHOLE frame into the vertical canvas and fills the rest with a blurred,
+darkened copy of the same footage. Nobody is ever cut out, so speaker
+identification stops mattering.
+
+    python autoreframe.py --input in.mp4 --output out.mp4 --fit
+    python autoreframe.py ... --fit --ratio 4:5 --height 1350   <- BETTER
+
+face_extent() first crops to the bounding box of all faces so the group fills
+more of the frame. On this test video it returned 0-1920 (100% of width) -- the
+7 people genuinely span the entire frame, so there was nothing to crop. That is
+the correct answer, not a bug.
+
+### *** 9:16 IS THE WRONG ASPECT FOR PANEL CONTENT ***
+Seven people spanning 1920px CANNOT be made large inside a 1080-wide vertical
+frame. 4:5 (1080x1350) shows them markedly bigger with the same
+everyone-in-frame guarantee, and both Instagram and TikTok accept it.
+Use 9:16 for single-speaker content, 4:5 for panels and group tables.
