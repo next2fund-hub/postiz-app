@@ -32,6 +32,13 @@ export const TASK_LABEL: Record<string, string> = {
   'image-to-image': 'Image to Image',
   'text-to-video': 'Text to Video',
   'image-to-video': 'Image to Video',
+  'reference-to-video': 'Reference to Video',
+  'video-to-video': 'Video to Video',
+  'video-edit': 'Video Editing',
+  'lip-sync': 'Lip Sync',
+  'upscale': 'Upscale',
+  'motion': 'Motion Control',
+  avatar: 'Avatar',
 };
 
 export const STATUS_STYLE: Record<string, string> = {

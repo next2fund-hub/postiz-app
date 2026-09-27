@@ -292,57 +292,109 @@ def aspect_of(props):
 
 
 def mode_of(model: str, url: str, capability: str) -> str:
+    """
+    What the model turns into what.
+
+    kie.ai's catalogue distinguishes far more than text/image-to-image/video -
+    lip sync, upscales, video editing, avatars driven by audio. Collapsing all
+    of those into "text to video" mislabels them and makes the task filter
+    useless, so the distinctions it actually draws are kept.
+    Order matters: the most specific pattern must win.
+    """
     hay = f"{model} {url}".lower()
-    if "image-to-video" in hay or "img2video" in hay:
+
+    def has(*needles):
+        return any(n in hay for n in needles)
+
+    if has("lip-sync", "lipsync"):
+        return "lip-sync"
+    if has("upscale"):
+        return "upscale"
+    if has("video-edit", "videoedit"):
+        return "video-edit"
+    if has("animate-move", "animate-replace", "motion-control", "motion_transfer"):
+        return "motion"
+    if has("avatar", "omnihuman", "infinitalk", "from-audio", "speech-to-video"):
+        return "avatar"
+    if has("reference-to-video", "r2v"):
+        return "reference-to-video"
+    if has("video-to-video"):
+        return "video-to-video"
+    if has("image-to-video", "img2video"):
         return "image-to-video"
-    if "text-to-video" in hay:
+    if has("text-to-video"):
         return "text-to-video"
-    if "image-to-image" in hay or "edit" in hay or "remix" in hay:
+    if has("image-to-image", "image-edit", "edit", "remix", "layer-decomposition", "segment-map"):
         return "image-to-image"
-    if "text-to-image" in hay:
+    if has("text-to-image"):
         return "text-to-image"
+
     return "text-to-video" if capability == "video" else "text-to-image"
 
 
 def prettify(slug: str) -> str:
-    """imagen4-fast -> Imagen 4 Fast."""
+    """imagen4-fast -> Imagen 4 Fast, keeping decimals like 1.5 intact."""
     out = []
     for token in re.split(r"[-_/\s]+", slug):
         if not token:
             continue
-        # split letter/digit runs so "imagen4" reads as "Imagen 4"
-        parts = re.findall(r"[A-Za-z]+|\d+", token)
-        out.extend(p.upper() if len(p) <= 2 and p.isalpha() else p.capitalize() for p in parts)
+        parts = re.findall(r"[A-Za-z]+|\d+(?:\.\d+)?", token)
+        out.extend(
+            p.upper() if len(p) <= 2 and p.isalpha() else p.capitalize()
+            for p in parts
+        )
     return " ".join(out)
 
 
 def title_of(summary, model, vendor) -> str:
     """
-    A name, not a restatement of the vendor.
+    Name the MODEL, from its own id.
 
-    kie.ai's page summaries are often just "Google - imagen4-fast", which put
-    the vendor in the title, in the description AND in the card badge - three
-    times, and none of them telling you what the model does.
+    kie.ai's page summaries are unusable as names. Some are just the vendor
+    ("Google - imagen4-fast"); strip the vendor off others and you are left
+    holding the task ("Flux-2 - Image to Image" -> "Image to Image"), which is
+    already shown as a chip and says nothing about which model it is.
+
+    The provider id always carries the real identity, so parse that instead:
+    bytedance/seedance-1.5-pro -> Seedance 1.5 Pro, wan/2-6-image-to-video ->
+    Wan 2.6.
     """
-    t = clean(summary, 70) or model
-    t = re.sub(rf"^{re.escape(vendor)}\s*[-–—:]\s*", "", t, flags=re.I).strip()
-    if not t:
-        t = model.split("/")[-1]
-    # A leftover slug ("imagen4-fast", "imagen4") reads badly; anything that is
-    # already a phrase with spaces is left alone.
-    if " " not in t:
-        t = prettify(t)
-    return t
+    ns, _, rest = model.partition("/")
+    core = rest or ns
+
+    core = re.sub(
+        r"[-_]?(text|image|img|video|reference|speech|audio|r2v)[-_]to[-_]"
+        r"(image|video|speech|audio|text|music)$",
+        "",
+        core,
+        flags=re.I,
+    )
+    core = re.sub(r"[-_](edit|remix|upscale|videoedit)$", "", core, flags=re.I)
+    core = re.sub(r"(?<=\d)-(?=\d)", ".", core).strip("-_ ")
+
+    name = prettify(core) if core else ""
+
+    # A name that opens with a version number ("5 Lite", "2.6 Flash") is
+    # missing its family, so borrow it from the namespace.
+    if not name or re.match(r"^[\d.]", name):
+        name = f"{prettify(ns)} {name}".strip()
+    elif rest and ns and ns.lower() not in name.lower() and len(name.split()) < 2:
+        name = f"{prettify(ns)} {name}"
+
+    # "V 4" and "K 3" are one token that prettify split apart.
+    name = re.sub(r"\b([A-Za-z]{1,2}) (\d)", r"\1\2", name)
+
+    return name or clean(summary, 70) or model
 
 
 def describe(model: str, fields: list) -> str:
     """
     Say something true about the model from its own parameters.
 
-    There is no prose description in kie.ai's specs worth showing - the
-    operation description is boilerplate about polling - so this reports what
-    the model actually accepts. Falls back to the provider id, which is at
-    least the thing you would search for on kie.ai.
+    There is no prose worth showing in kie.ai's specs - the operation
+    description is boilerplate about polling - so report what the model
+    accepts. Falls back to the provider id, which is at least the string you
+    would search for on kie.ai.
     """
     by_name = {f["name"]: f for f in fields}
     bits = []
@@ -358,7 +410,9 @@ def describe(model: str, fields: list) -> str:
     for media in (f for f in fields if f.get("type") == "media"):
         n = media.get("max")
         bits.append(
-            f"up to {n} reference images" if n and n > 1 else f"needs a {media['label'].lower()}"
+            f"up to {n} reference images"
+            if n and n > 1
+            else f"needs a {media['label'].lower()}"
         )
         break
 

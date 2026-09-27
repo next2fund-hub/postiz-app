@@ -13,11 +13,23 @@ export type StudioCapability = 'image' | 'video';
 /** Normalised orientation. Each model maps this onto its own parameter. */
 export type StudioOutput = 'vertical' | 'horizontal';
 
+/**
+ * What a model turns into what. Mirrors the distinctions kie.ai's own
+ * catalogue draws - collapsing lip sync, upscales and avatars into
+ * "text to video" would mislabel them and make the task filter useless.
+ */
 export type StudioMode =
   | 'text-to-image'
   | 'image-to-image'
   | 'text-to-video'
-  | 'image-to-video';
+  | 'image-to-video'
+  | 'reference-to-video'
+  | 'video-to-video'
+  | 'video-edit'
+  | 'lip-sync'
+  | 'upscale'
+  | 'motion'
+  | 'avatar';
 
 export type StudioProviderId = 'kie';
 
