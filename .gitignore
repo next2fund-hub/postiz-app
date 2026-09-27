@@ -58,3 +58,6 @@ Thumbs.db
 .secrets/
 libraries/plugins/src/plugins.ts
 i18n.cache
+
+# Cached kie.ai docs pages for tools/kie_catalog_sync.py
+tools/.kie-docs-cache/

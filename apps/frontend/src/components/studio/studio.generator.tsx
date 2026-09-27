@@ -17,6 +17,7 @@ interface StudioModel {
   provider: string;
   title: string;
   description: string;
+  providerModel: string;
   capability: 'image' | 'video';
   mode: string;
   fields: StudioFieldSpec[];
@@ -36,6 +37,13 @@ interface StudioJob {
   createdAt: string;
 }
 
+const MODE_LABEL: Record<string, string> = {
+  'text-to-image': 'Image from a prompt',
+  'image-to-image': 'Image from an image',
+  'text-to-video': 'Video from a prompt',
+  'image-to-video': 'Video from an image',
+};
+
 const STATUS_STYLE: Record<string, string> = {
   QUEUED: 'bg-newColColor text-textItemBlur',
   RUNNING: 'bg-newColColor text-textItemFocused',
@@ -53,6 +61,7 @@ export const StudioGenerator: FC<{
   const form = useForm();
   const [modelId, setModelId] = useState<string>('');
   const [output, setOutput] = useState<'vertical' | 'horizontal'>('vertical');
+  const [query, setQuery] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const { data: models, isLoading: loadingModels } = useSWR<StudioModel[]>(
@@ -88,9 +97,41 @@ export const StudioGenerator: FC<{
     [models]
   );
 
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      return available;
+    }
+    return available.filter((m) =>
+      `${m.title} ${m.description} ${m.providerModel}`.toLowerCase().includes(q)
+    );
+  }, [available, query]);
+
+  // Group by what the model needs from you, which is the question people
+  // actually have - "can I make this from just a prompt?" - rather than by
+  // vendor, which only matters once you already know what you want.
+  const grouped = useMemo(() => {
+    const order = [
+      'text-to-image',
+      'image-to-image',
+      'text-to-video',
+      'image-to-video',
+    ];
+    const buckets = new Map<string, StudioModel[]>();
+    for (const m of filtered) {
+      const label = MODE_LABEL[m.mode] || m.mode;
+      buckets.set(label, [...(buckets.get(label) || []), m]);
+    }
+    return [...buckets.entries()].sort(
+      (a, b) =>
+        order.findIndex((o) => MODE_LABEL[o] === a[0]) -
+        order.findIndex((o) => MODE_LABEL[o] === b[0])
+    );
+  }, [filtered]);
+
   const selected = useMemo(
-    () => available.find((m) => m.id === modelId) || available[0],
-    [available, modelId]
+    () => available.find((m) => m.id === modelId) || filtered[0] || available[0],
+    [available, filtered, modelId]
   );
 
   const generate = useCallback(async () => {
@@ -165,29 +206,52 @@ export const StudioGenerator: FC<{
       <div className="flex gap-[20px] flex-col xl:flex-row">
         <div className="flex-1 flex flex-col gap-[16px] p-[20px] rounded-[12px] bg-newBgColorInner border border-newTableBorder">
           <div className="flex flex-col gap-[8px]">
-            <div className="text-[14px] font-[500]">Model</div>
-            <div className="flex flex-wrap gap-[8px]">
-              {available.map((m) => (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => {
-                    setModelId(m.id);
-                    form.reset({});
-                  }}
-                  className={clsx(
-                    'text-start px-[12px] py-[10px] rounded-[8px] border transition-colors',
-                    selected?.id === m.id
-                      ? 'border-newTableBorder bg-boxFocused text-textItemFocused'
-                      : 'border-newTableBorder text-textItemBlur hover:text-textItemFocused'
-                  )}
-                >
-                  <div className="text-[14px] font-[500]">{m.title}</div>
-                  <div className="text-[12px] opacity-70 max-w-[240px]">
-                    {m.description}
+            <div className="flex items-center gap-[10px]">
+              <div className="text-[14px] font-[500]">Model</div>
+              <div className="text-[12px] text-textItemBlur">
+                {filtered.length} of {available.length}
+              </div>
+            </div>
+
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search models, e.g. kling, seedream, 4k"
+              className="w-full h-[38px] px-[12px] rounded-[8px] bg-newColColor border border-newTableBorder text-[14px] outline-none"
+            />
+
+            {/* 130+ models do not fit on a page. Scroll the list, not the form. */}
+            <div className="max-h-[280px] overflow-y-auto flex flex-col gap-[10px] pe-[4px]">
+              {grouped.map(([group, items]) => (
+                <div key={group} className="flex flex-col gap-[4px]">
+                  <div className="text-[11px] uppercase tracking-wide text-textItemBlur">
+                    {group}
                   </div>
-                </button>
+                  {items.map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => {
+                        setModelId(m.id);
+                        form.reset({});
+                      }}
+                      className={clsx(
+                        'text-start px-[10px] py-[7px] rounded-[6px] border transition-colors',
+                        selected?.id === m.id
+                          ? 'border-newTableBorder bg-boxFocused text-textItemFocused'
+                          : 'border-transparent text-textItemBlur hover:bg-boxFocused hover:text-textItemFocused'
+                      )}
+                    >
+                      <div className="text-[13px] font-[500]">{m.title}</div>
+                    </button>
+                  ))}
+                </div>
               ))}
+              {!filtered.length && (
+                <div className="text-[13px] text-textItemBlur">
+                  No model matches that search.
+                </div>
+              )}
             </div>
           </div>
 
