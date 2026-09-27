@@ -7,6 +7,10 @@ import { Organization } from '@prisma/client';
 import dayjs from 'dayjs';
 import { makeId } from '@gitroom/nestjs-libraries/services/make.is';
 
+// Self-hosted instances are not metered; large enough to never gate a
+// real workload, small enough to stay readable where the UI prints it.
+const UNMETERED_CREDITS = 1000000;
+
 @Injectable()
 export class SubscriptionService {
   constructor(
@@ -192,6 +196,16 @@ export class SubscriptionService {
   }
 
   async checkCredits(organization: Organization, checkType = 'ai_images') {
+    // No Stripe key means billing was never configured - a self-hosted
+    // instance. There is no subscription row, so the tier below resolves to
+    // FREE (image_generation_count / generate_videos: 0) and every AI feature
+    // would be refused. Self-hosted runs on the operator's own provider keys,
+    // so the quota is theirs to manage, not ours to meter.
+    // users.controller.ts treats a missing Stripe key the same way.
+    if (!process.env.STRIPE_PUBLISHABLE_KEY) {
+      return { credits: UNMETERED_CREDITS };
+    }
+
     // @ts-ignore
     const type = organization?.subscription?.subscriptionTier || 'FREE';
 
