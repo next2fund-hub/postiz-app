@@ -181,11 +181,16 @@ export const StudioBrowser: FC<{
                   </span>
                 </div>
                 <div className="px-[9px] py-[7px]">
-                  <div className="text-[9px] tracking-wide text-textItemBlur">
-                    {m.vendor.toUpperCase()}
-                  </div>
+                  {/*
+                    No vendor line here - the badge on the image already says
+                    it, and repeating it pushed the vendor name onto the card
+                    three times while saying nothing about the model.
+                  */}
                   <div className="text-[12px] font-[600] text-textItemFocused truncate">
                     {m.title}
+                  </div>
+                  <div className="text-[10px] text-textItemBlur truncate">
+                    {m.description}
                   </div>
                   <div className="mt-[4px] flex items-center gap-[4px]">
                     <span className="text-[9px] px-[5px] py-[2px] rounded-[3px] bg-newColColor text-textItemBlur">

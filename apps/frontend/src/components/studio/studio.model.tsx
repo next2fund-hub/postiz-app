@@ -106,6 +106,12 @@ export const StudioModelPage: FC<{
         )}
       </div>
 
+      {!!model.description && (
+        <div className="text-[13px] text-textItemBlur -mt-[8px]">
+          {model.description}
+        </div>
+      )}
+
       {/*
         kie.ai publishes no per-model price list - only what a finished task
         actually consumed. So the estimate is your own last run, and before
@@ -116,12 +122,6 @@ export const StudioModelPage: FC<{
           ? 'Cost is shown after your first run - the provider reports it per generation.'
           : `Your last run cost ${lastCost} credits.`}
       </div>
-
-      {!!model.description && (
-        <div className="text-[13px] text-textItemBlur -mt-[8px]">
-          {model.description}
-        </div>
-      )}
 
       <div className="flex gap-[20px] flex-col xl:flex-row">
         <div className="flex-1 p-[20px] rounded-[12px] bg-newBgColorInner border border-newTableBorder">

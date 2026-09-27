@@ -304,6 +304,70 @@ def mode_of(model: str, url: str, capability: str) -> str:
     return "text-to-video" if capability == "video" else "text-to-image"
 
 
+def prettify(slug: str) -> str:
+    """imagen4-fast -> Imagen 4 Fast."""
+    out = []
+    for token in re.split(r"[-_/\s]+", slug):
+        if not token:
+            continue
+        # split letter/digit runs so "imagen4" reads as "Imagen 4"
+        parts = re.findall(r"[A-Za-z]+|\d+", token)
+        out.extend(p.upper() if len(p) <= 2 and p.isalpha() else p.capitalize() for p in parts)
+    return " ".join(out)
+
+
+def title_of(summary, model, vendor) -> str:
+    """
+    A name, not a restatement of the vendor.
+
+    kie.ai's page summaries are often just "Google - imagen4-fast", which put
+    the vendor in the title, in the description AND in the card badge - three
+    times, and none of them telling you what the model does.
+    """
+    t = clean(summary, 70) or model
+    t = re.sub(rf"^{re.escape(vendor)}\s*[-–—:]\s*", "", t, flags=re.I).strip()
+    if not t:
+        t = model.split("/")[-1]
+    # A leftover slug ("imagen4-fast", "imagen4") reads badly; anything that is
+    # already a phrase with spaces is left alone.
+    if " " not in t:
+        t = prettify(t)
+    return t
+
+
+def describe(model: str, fields: list) -> str:
+    """
+    Say something true about the model from its own parameters.
+
+    There is no prose description in kie.ai's specs worth showing - the
+    operation description is boilerplate about polling - so this reports what
+    the model actually accepts. Falls back to the provider id, which is at
+    least the thing you would search for on kie.ai.
+    """
+    by_name = {f["name"]: f for f in fields}
+    bits = []
+
+    res = by_name.get("resolution")
+    if res and res.get("options"):
+        bits.append(f"up to {res['options'][-1]['value']}")
+
+    dur = by_name.get("duration")
+    if dur and dur.get("options"):
+        bits.append(f"{'/'.join(o['value'] for o in dur['options'])}s")
+
+    for media in (f for f in fields if f.get("type") == "media"):
+        n = media.get("max")
+        bits.append(
+            f"up to {n} reference images" if n and n > 1 else f"needs a {media['label'].lower()}"
+        )
+        break
+
+    if "sound" in by_name:
+        bits.append("optional audio")
+
+    return " · ".join(bits) if bits else model
+
+
 def parse(url: str):
     try:
         md = fetch(url)
@@ -342,16 +406,17 @@ def parse(url: str):
     # Prompt first; it is what people type.
     fields.sort(key=lambda f: (f["name"] != "prompt", not f.get("required")))
 
-    title = clean(op.get("summary") or model, 60)
+    vendor = vendor_of(op, url)
+    title = title_of(op.get("summary"), model, vendor)
     return {
         "id": f"kie:{model}",
         "provider": "kie",
         "providerModel": model,
         "title": title,
-        "description": clean(op.get("summary"), 110) or title,
+        "description": describe(model, fields),
         "capability": capability,
         "mode": mode_of(model, url, capability),
-        "vendor": vendor_of(op, url),
+        "vendor": vendor,
         "docs": url[:-3] if url.endswith(".md") else url,
         "fields": fields,
         "aspect": aspect_of(props),
