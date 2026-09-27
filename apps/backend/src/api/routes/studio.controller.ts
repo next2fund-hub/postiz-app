@@ -21,6 +21,12 @@ export class StudioController {
     return this._studioService.listModels(capability);
   }
 
+  /** Remaining provider credits. */
+  @Get('/credits')
+  credits() {
+    return this._studioService.balances();
+  }
+
   @Get('/jobs')
   jobs(
     @GetOrgFromRequest() org: Organization,

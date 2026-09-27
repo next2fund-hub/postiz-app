@@ -13,6 +13,8 @@ export interface StudioPollResult {
   state: 'running' | 'success' | 'failed';
   resultUrls?: string[];
   error?: string;
+  /** Credits the provider charged for this run, when it reports them. */
+  creditsConsumed?: number;
 }
 
 /**
@@ -38,4 +40,7 @@ export abstract class StudioProvider {
   ): Promise<StudioSubmitResult>;
 
   abstract poll(externalId: string): Promise<StudioPollResult>;
+
+  /** Remaining account balance, or null when the provider cannot say. */
+  abstract balance(): Promise<number | null>;
 }

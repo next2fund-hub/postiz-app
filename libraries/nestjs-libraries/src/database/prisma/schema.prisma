@@ -909,6 +909,10 @@ model StudioJob {
   /// Provider task id. Used to resume polling and to match webhook callbacks.
   externalId     String?
   resultUrls     Json?
+  /// What the provider actually charged for this run. kie.ai publishes no
+  /// per-model price list, so the only truthful cost is the one it reports
+  /// back after the fact.
+  creditsConsumed Float?
   /// Set once the finished asset has been copied into the Media library.
   mediaId        String?
   error          String?

@@ -11,6 +11,7 @@ const LIST_SELECT = {
   prompt: true,
   output: true,
   resultUrls: true,
+  creditsConsumed: true,
   mediaId: true,
   error: true,
   createdAt: true,
@@ -82,13 +83,19 @@ export class StudioRepository {
     });
   }
 
-  markSuccess(id: string, resultUrls: string[], mediaId?: string) {
+  markSuccess(
+    id: string,
+    resultUrls: string[],
+    mediaId?: string,
+    creditsConsumed?: number
+  ) {
     return this._studioJob.model.studioJob.update({
       where: { id },
       data: {
         status: StudioJobStatus.SUCCESS,
         resultUrls,
         mediaId,
+        creditsConsumed,
         finishedAt: new Date(),
       },
     });

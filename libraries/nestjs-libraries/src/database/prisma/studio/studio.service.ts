@@ -29,6 +29,14 @@ export class StudioService {
     return this._catalog.list(capability);
   }
 
+  /** Remaining provider credits, so the Studio can show what is left. */
+  async balances() {
+    const kie = this._catalog.getProvider('kie');
+    return {
+      kie: kie?.isConfigured() ? await kie.balance() : null,
+    };
+  }
+
   listJobs(organizationId: string, capability?: string) {
     return this._studioRepository.list(organizationId, capability);
   }
@@ -145,7 +153,12 @@ export class StudioService {
             stored.split('/').pop(),
             stored
           );
-          await this._studioRepository.markSuccess(id, urls, media.id);
+          await this._studioRepository.markSuccess(
+            id,
+            urls,
+            media.id,
+            result.creditsConsumed
+          );
           return;
         }
       }

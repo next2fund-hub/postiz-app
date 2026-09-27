@@ -436,7 +436,7 @@ def main():
     if args.dry_run:
         return
 
-    body = ts_value([{k: v for k, v in m.items() if k != "vendor"} for m in models])
+    body = ts_value(models)
     OUT.write_text(
         (HEADER % (len(models), images, videos)) + body + ";\n", encoding="utf-8"
     )

@@ -119,6 +119,26 @@ export class KieProvider extends StudioProvider {
     return { externalId: json.data.taskId };
   }
 
+  /**
+   * Remaining credits on the account.
+   *
+   * Note this is the ACCOUNT balance, not a price list - kie.ai publishes no
+   * per-model pricing endpoint, only what a finished task consumed.
+   */
+  async balance(): Promise<number | null> {
+    try {
+      const res = await fetch('https://api.kie.ai/api/v1/chat/credit', {
+        headers: this.headers(),
+      });
+      const json: any = await res.json().catch(() => ({}));
+      return json?.code === 200 && typeof json.data === 'number'
+        ? json.data
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
   async poll(externalId: string): Promise<StudioPollResult> {
     const res = await fetch(
       `${BASE}/recordInfo?taskId=${encodeURIComponent(externalId)}`,
@@ -142,8 +162,11 @@ export class KieProvider extends StudioProvider {
       } catch {
         return { state: 'failed', error: 'Could not parse the provider result' };
       }
+      const creditsConsumed =
+        typeof data.creditsConsumed === 'number' ? data.creditsConsumed : undefined;
+
       return urls.length
-        ? { state: 'success', resultUrls: urls }
+        ? { state: 'success', resultUrls: urls, creditsConsumed }
         : { state: 'failed', error: 'Provider reported success but returned no files' };
     }
 

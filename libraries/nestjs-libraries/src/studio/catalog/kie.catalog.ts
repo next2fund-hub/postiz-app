@@ -28,6 +28,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Flux-2 - Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Flux-2",
     docs: "https://docs.kie.ai/market/flux2/flex-image-to-image",
     fields: [
       {
@@ -86,6 +87,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Flux-2 - Pro Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Flux-2",
     docs: "https://docs.kie.ai/market/flux2/pro-image-to-image",
     fields: [
       {
@@ -144,6 +146,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Flux-2 - Pro Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Flux-2",
     docs: "https://docs.kie.ai/market/flux2/pro-text-to-image",
     fields: [
       {
@@ -193,6 +196,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Flux-2 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Flux-2",
     docs: "https://docs.kie.ai/market/flux2/flex-text-to-image",
     fields: [
       {
@@ -242,6 +246,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - imagen4",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/imagen4",
     fields: [
       {
@@ -281,6 +286,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - imagen4-fast",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/imagen4-fast",
     fields: [
       {
@@ -319,6 +325,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - imagen4-ultra",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/imagen4-ultra",
     fields: [
       {
@@ -358,6 +365,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - Nano Banana",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/nano-banana",
     fields: [
       {
@@ -459,6 +467,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - Nano Banana 2",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/nanobanana2",
     fields: [
       {
@@ -530,6 +539,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - Nano Banana 2 Lite",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/nano-banana-2-lite",
     fields: [
       {
@@ -563,6 +573,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - Nano Banana Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/nano-banana-edit",
     fields: [
       {
@@ -667,6 +678,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Google - Nano Banana Pro",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Google",
     docs: "https://docs.kie.ai/market/google/pro-image-to-image",
     fields: [
       {
@@ -738,6 +750,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image 2 - Image To Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt/gpt-image-2-image-to-image",
     fields: [
       {
@@ -811,6 +824,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image 2.5 Flare - Image To Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt/gpt-image-2-5-flare-image-to-image",
     fields: [
       {
@@ -884,6 +898,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image 2.5 Flare - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt/gpt-image-2-5-flare-text-to-image",
     fields: [
       {
@@ -949,6 +964,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image 2.5 Sunburst - Image To Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt/gpt-image-2-5-sunburst-image-to-image",
     fields: [
       {
@@ -1022,6 +1038,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image 2.5 Sunburst - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt/gpt-image-2-5-sunburst-text-to-image",
     fields: [
       {
@@ -1087,6 +1104,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image-1.5 - Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt-image/1-5-image-to-image",
     fields: [
       {
@@ -1138,6 +1156,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image-1.5 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt-image/1-5-text-to-image",
     fields: [
       {
@@ -1180,6 +1199,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "GPT Image-2 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "GPT Image",
     docs: "https://docs.kie.ai/market/gpt/gpt-image-2-text-to-image",
     fields: [
       {
@@ -1245,6 +1265,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine - image to image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/image-to-image",
     fields: [
       {
@@ -1279,6 +1300,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/text-to-image",
     fields: [
       {
@@ -1315,6 +1337,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine Image 2.0 Image Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine-image-2-0/image-to-image",
     fields: [
       {
@@ -1348,6 +1371,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine Image 2.0 Segment Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine-image-2-0/image-edit",
     fields: [
       {
@@ -1375,6 +1399,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine Image 2.0 Text To Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine-image-2-0/text-to-image",
     fields: [
       {
@@ -1399,6 +1424,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Ideogram - Character",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Ideogram",
     docs: "https://docs.kie.ai/market/ideogram/character",
     fields: [
       {
@@ -1546,6 +1572,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Ideogram - Character Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Ideogram",
     docs: "https://docs.kie.ai/market/ideogram/character-edit",
     fields: [
       {
@@ -1667,6 +1694,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Ideogram - Character Remix",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Ideogram",
     docs: "https://docs.kie.ai/market/ideogram/character-remix",
     fields: [
       {
@@ -1843,6 +1871,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Ideogram V3 Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Ideogram",
     docs: "https://docs.kie.ai/market/ideogram/v3-edit",
     fields: [
       {
@@ -1911,6 +1940,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Ideogram V3 Remix",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Ideogram",
     docs: "https://docs.kie.ai/market/ideogram/v3-remix",
     fields: [
       {
@@ -2065,6 +2095,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Ideogram V3 Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Ideogram",
     docs: "https://docs.kie.ai/market/ideogram/v3-text-to-image",
     fields: [
       {
@@ -2180,6 +2211,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen - Image Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen/image-edit",
     fields: [
       {
@@ -2351,6 +2383,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen - Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen/image-to-image",
     fields: [
       {
@@ -2468,6 +2501,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen/text-to-image",
     fields: [
       {
@@ -2602,6 +2636,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen 2.1 - Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen2-1/image-to-image",
     fields: [
       {
@@ -2716,6 +2751,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen 2.1 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen2-1/text-to-image",
     fields: [
       {
@@ -2815,6 +2851,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen2 - Image Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen2/image-edit",
     fields: [
       {
@@ -2912,6 +2949,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen2 - Text To Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen2/text-to-image",
     fields: [
       {
@@ -2990,6 +3028,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen3 Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen3/image-to-image",
     fields: [
       {
@@ -3124,6 +3163,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen3 Pro Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen3-pro/image-to-image",
     fields: [
       {
@@ -3258,6 +3298,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen3 Pro Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen3-pro/text-to-image",
     fields: [
       {
@@ -3382,6 +3423,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Qwen3 Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Qwen",
     docs: "https://docs.kie.ai/market/qwen3/text-to-image",
     fields: [
       {
@@ -3506,6 +3548,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Recraft - Crisp Upscale",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Recraft",
     docs: "https://docs.kie.ai/market/recraft/crisp-upscale",
     fields: [
       {
@@ -3525,6 +3568,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Recraft - Remove Background",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Recraft",
     docs: "https://docs.kie.ai/market/recraft/remove-background",
     fields: [
       {
@@ -3544,6 +3588,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream 5.0 Pro - Layer Decomposition",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/5-pro-layer-decomposition",
     fields: [
       {
@@ -3612,6 +3657,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream3.0 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/seedream",
     fields: [
       {
@@ -3680,6 +3726,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream4.0 - Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/seedream-v4-edit",
     fields: [
       {
@@ -3796,6 +3843,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream4.0 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/seedream-v4-text-to-image",
     fields: [
       {
@@ -3903,6 +3951,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream4.5 - Edit",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/4-5-edit",
     fields: [
       {
@@ -3961,6 +4010,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream4.5 - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/4-5-text-to-image",
     fields: [
       {
@@ -4010,6 +4060,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream5.0 Lite - Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream-5-lite-image-to-image",
     fields: [
       {
@@ -4089,6 +4140,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream5.0 Lite - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/5-lite-text-to-image",
     fields: [
       {
@@ -4159,6 +4211,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream5.0 Pro - Image to Image",
     capability: "image",
     mode: "image-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/5-pro-image-to-image",
     fields: [
       {
@@ -4234,6 +4287,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Seedream5.0 Pro - Text to Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Seedream",
     docs: "https://docs.kie.ai/market/seedream/5-pro-text-to-image",
     fields: [
       {
@@ -4300,6 +4354,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Topaz - Image Upscale",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Topaz",
     docs: "https://docs.kie.ai/market/topaz/image-upscale",
     fields: [
       {
@@ -4341,6 +4396,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.7 Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-7-image",
     fields: [
       {
@@ -4437,6 +4493,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.7 Image Pro",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-7-image-pro",
     fields: [
       {
@@ -4533,6 +4590,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Z-Image",
     capability: "image",
     mode: "text-to-image",
+    vendor: "Z-image",
     docs: "https://docs.kie.ai/market/z-image/z-image",
     fields: [
       {
@@ -4564,6 +4622,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance - V1 Lite Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/v1-lite-image-to-video",
     fields: [
       {
@@ -4662,6 +4721,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance - V1 Lite Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/v1-lite-text-to-video",
     fields: [
       {
@@ -4749,6 +4809,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance - V1 Pro Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/v1-pro-text-to-video",
     fields: [
       {
@@ -4839,6 +4900,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance Seedance 1.5 Pro",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/seedance-1-5-pro",
     fields: [
       {
@@ -4920,6 +4982,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance Seedance 2.0",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/seedance-2",
     fields: [
       {
@@ -5038,6 +5101,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance Seedance 2.0 Fast",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/seedance-2-fast",
     fields: [
       {
@@ -5148,6 +5212,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance Seedance 2.0 Mini",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/seedance-2-mini",
     fields: [
       {
@@ -5251,6 +5316,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance Seedance 2.5",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/seedance-2-5",
     fields: [
       {
@@ -5382,6 +5448,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance V1 Pro Fast Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/v1-pro-fast-image-to-video",
     fields: [
       {
@@ -5449,6 +5516,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Bytedance V1 Pro Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Bytedance",
     docs: "https://docs.kie.ai/market/bytedance/v1-pro-image-to-video",
     fields: [
       {
@@ -5541,6 +5609,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Gemini Omni 1.1 Flash",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Gemini Omni",
     docs: "https://docs.kie.ai/market/google/gemini-omni-flash-1-1",
     fields: [
       {
@@ -5655,6 +5724,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Gemini Omni Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Gemini Omni",
     docs: "https://docs.kie.ai/market/gemini-omni-video",
     fields: [
       {
@@ -5753,6 +5823,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine - Video Extend",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/extend",
     fields: [
       {
@@ -5796,6 +5867,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine - Video Upscale",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/upscale",
     fields: [
       {
@@ -5833,6 +5905,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/image-to-video",
     fields: [
       {
@@ -5934,6 +6007,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/text-to-video",
     fields: [
       {
@@ -6012,6 +6086,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Grok Imagine Video 1.5 Preview",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Grok Imagine",
     docs: "https://docs.kie.ai/market/grok-imagine/1-5-preview",
     fields: [
       {
@@ -6080,6 +6155,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Hailuo 2.3 Pro Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Hailuo",
     docs: "https://docs.kie.ai/market/hailuo/2-3-image-to-video-pro",
     fields: [
       {
@@ -6147,6 +6223,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Hailuo 2.3 Standard Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Hailuo",
     docs: "https://docs.kie.ai/market/hailuo/2-3-image-to-video-standard",
     fields: [
       {
@@ -6214,6 +6291,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Hailuo Pro Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Hailuo",
     docs: "https://docs.kie.ai/market/hailuo/02-image-to-video-pro",
     fields: [
       {
@@ -6259,6 +6337,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Hailuo Pro Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Hailuo",
     docs: "https://docs.kie.ai/market/hailuo/02-text-to-video-pro",
     fields: [
       {
@@ -6291,6 +6370,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Hailuo Standard Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Hailuo",
     docs: "https://docs.kie.ai/market/hailuo/02-image-to-video-standard",
     fields: [
       {
@@ -6370,6 +6450,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Hailuo Standard Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Hailuo",
     docs: "https://docs.kie.ai/market/hailuo/02-text-to-video-standard",
     fields: [
       {
@@ -6419,6 +6500,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse - image-to-video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse/image-to-video",
     fields: [
       {
@@ -6482,6 +6564,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse - reference-to-video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse/reference-to-video",
     fields: [
       {
@@ -6551,6 +6634,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse - text-to-video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse/text-to-video",
     fields: [
       {
@@ -6611,6 +6695,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse - video-edit",
     capability: "video",
     mode: "image-to-image",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse/video-edit",
     fields: [
       {
@@ -6689,6 +6774,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse-1-1 image-to-video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse-1-1/image-to-video",
     fields: [
       {
@@ -6744,6 +6830,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse-1-1 reference-to-video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse-1-1/reference-to-video",
     fields: [
       {
@@ -6805,6 +6892,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "HappyHorse-1-1 text-to-video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "HappyHorse",
     docs: "https://docs.kie.ai/market/happyhorse-1-1/text-to-video",
     fields: [
       {
@@ -6857,6 +6945,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Infinitalk - From Audio",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Infinitalk",
     docs: "https://docs.kie.ai/market/infinitalk/from-audio",
     fields: [
       {
@@ -6914,6 +7003,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling - V2.5 Turbo Image to Video Pro",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v25-turbo-image-to-video-pro",
     fields: [
       {
@@ -6980,6 +7070,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling - V2.5 Turbo Text to Video Pro",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v25-turbo-text-to-video-pro",
     fields: [
       {
@@ -7038,6 +7129,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling - V3 Turbo Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v3-turbo-image-to-video",
     fields: [
       {
@@ -7092,6 +7184,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling - V3 Turbo Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v3-turbo-text-to-video",
     fields: [
       {
@@ -7143,6 +7236,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling 2.6 Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/image-to-video",
     fields: [
       {
@@ -7197,6 +7291,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling 2.6 motion-control",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/motion-control",
     fields: [
       {
@@ -7270,6 +7365,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling 2.6 Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/text-to-video",
     fields: [
       {
@@ -7320,6 +7416,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling 3.0",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/kling-3-0",
     fields: [
       {
@@ -7451,6 +7548,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling 3.0 Omni Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v3-omni-text-to-video",
     fields: [
       {
@@ -7579,6 +7677,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling 3.0 Omni Transformation",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v3-omni-transformation",
     fields: [
       {
@@ -7662,6 +7761,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling AI Avatar Pro",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/ai-avatar-pro",
     fields: [
       {
@@ -7696,6 +7796,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling AI Avatar Standard",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/ai-avatar-standard",
     fields: [
       {
@@ -7730,6 +7831,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling V2.1 Master Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v2-1-master-image-to-video",
     fields: [
       {
@@ -7790,6 +7892,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling V2.1 Master Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v2-1-master-text-to-video",
     fields: [
       {
@@ -7848,6 +7951,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling V2.1 Pro",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v2-1-pro",
     fields: [
       {
@@ -7914,6 +8018,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling V2.1 Standard",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/v2-1-standard",
     fields: [
       {
@@ -7974,6 +8079,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Kling-3.0 motion-control",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Kling",
     docs: "https://docs.kie.ai/market/kling/motion-control-v3",
     fields: [
       {
@@ -8026,6 +8132,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "MiniMax H3 Image-to-Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "MiniMax H3",
     docs: "https://docs.kie.ai/market/minimax-h3/image-to-video",
     fields: [
       {
@@ -8134,6 +8241,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "MiniMax H3 Reference-to-Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "MiniMax H3",
     docs: "https://docs.kie.ai/market/minimax-h3/reference-to-video",
     fields: [
       {
@@ -8259,6 +8367,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "MiniMax H3 Text-to-Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "MiniMax H3",
     docs: "https://docs.kie.ai/market/minimax-h3/text-to-video",
     fields: [
       {
@@ -8360,6 +8469,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Omnihuman 1.5",
     capability: "video",
     mode: "text-to-video",
+    vendor: "OmniHuman",
     docs: "https://docs.kie.ai/market/omnihuman-1-5",
     fields: [
       {
@@ -8432,6 +8542,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Omnihuman 1.5 Human Identification",
     capability: "video",
     mode: "text-to-video",
+    vendor: "OmniHuman",
     docs: "https://docs.kie.ai/market/omnihuman-1-5/human-identification",
     fields: [
       {
@@ -8451,6 +8562,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "OmniHuman 1.5 Subject Detection",
     capability: "video",
     mode: "text-to-video",
+    vendor: "OmniHuman",
     docs: "https://docs.kie.ai/market/omnihuman-1-5/subject-detection",
     fields: [
       {
@@ -8470,6 +8582,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "PixVerse V6 First & Last Frame Transition",
     capability: "video",
     mode: "text-to-video",
+    vendor: "PixVerse",
     docs: "https://docs.kie.ai/market/pixverse/transition",
     fields: [
       {
@@ -8555,6 +8668,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "PixVerse V6 Fusion / Reference-to-Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "PixVerse",
     docs: "https://docs.kie.ai/market/pixverse/reference-to-video",
     fields: [
       {
@@ -8631,6 +8745,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "PixVerse V6 Image-to-Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "PixVerse",
     docs: "https://docs.kie.ai/market/pixverse/image-to-video",
     fields: [
       {
@@ -8925,6 +9040,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "PixVerse V6 Text-to-Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "PixVerse",
     docs: "https://docs.kie.ai/market/pixverse/text-to-video",
     fields: [
       {
@@ -9008,6 +9124,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Topaz - Video Upscale",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Topaz",
     docs: "https://docs.kie.ai/market/topaz/video-upscale",
     fields: [
       {
@@ -9048,6 +9165,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Volcengine video to video lip sync",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Volcengine",
     docs: "https://docs.kie.ai/market/volcengine/video-to-video-lip-sync",
     fields: [
       {
@@ -9126,6 +9244,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - 2-6-flash-video-to-video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-6-flash-video-to-video",
     fields: [
       {
@@ -9207,6 +9326,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - 2.2 A14B Image to Video Turbo",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-2-a14b-image-to-video-turbo",
     fields: [
       {
@@ -9289,6 +9409,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - 2.2 A14B Speech to Video Turbo",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-2-a14b-speech-to-video-turbo",
     fields: [
       {
@@ -9408,6 +9529,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - 2.2 A14B Text to Video Turbo",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-2-a14b-text-to-video-turbo",
     fields: [
       {
@@ -9488,6 +9610,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - 2.6-flash-image-to-video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-6-flash-image-to-video",
     fields: [
       {
@@ -9574,6 +9697,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - Animate Move",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-2-animate-move",
     fields: [
       {
@@ -9627,6 +9751,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan - Animate Replace",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-2-animate-replace",
     fields: [
       {
@@ -9680,6 +9805,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.5 - Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-5-image-to-video",
     fields: [
       {
@@ -9765,6 +9891,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.5 - Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-5-text-to-video",
     fields: [
       {
@@ -9848,6 +9975,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.6 - Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-6-image-to-video",
     fields: [
       {
@@ -9922,6 +10050,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.6 - Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-6-text-to-video",
     fields: [
       {
@@ -9993,6 +10122,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.6 - Video to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-6-video-to-video",
     fields: [
       {
@@ -10069,6 +10199,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.7 - Image to Video",
     capability: "video",
     mode: "image-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-7-image-to-video",
     fields: [
       {
@@ -10174,6 +10305,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.7 - Reference to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-7-r2v",
     fields: [
       {
@@ -10282,6 +10414,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.7 - Text to Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-7-text-to-video",
     fields: [
       {
@@ -10398,6 +10531,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 2.7 - Video Edit",
     capability: "video",
     mode: "image-to-image",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/2-7-videoedit",
     fields: [
       {
@@ -10513,6 +10647,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 3.0 - Video",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/3-0-video",
     fields: [
       {
@@ -10586,6 +10721,7 @@ export const KIE_MODELS: StudioModel[] = [
     description: "Wan 3.0 - Video Prime",
     capability: "video",
     mode: "text-to-video",
+    vendor: "Wan",
     docs: "https://docs.kie.ai/market/wan/3-0-video-prime",
     fields: [
       {

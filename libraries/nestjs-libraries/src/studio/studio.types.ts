@@ -50,6 +50,8 @@ export interface StudioModel {
   providerModel: string;
   title: string;
   description: string;
+  /** Who makes the model - Google, ByteDance, Kling. Drives the provider filter. */
+  vendor: string;
   capability: StudioCapability;
   mode: StudioMode;
   fields: StudioParamField[];
