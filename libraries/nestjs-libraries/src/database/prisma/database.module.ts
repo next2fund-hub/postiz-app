@@ -40,6 +40,10 @@ import { SetsRepository } from '@gitroom/nestjs-libraries/database/prisma/sets/s
 import { ThirdPartyRepository } from '@gitroom/nestjs-libraries/database/prisma/third-party/third-party.repository';
 import { ThirdPartyService } from '@gitroom/nestjs-libraries/database/prisma/third-party/third-party.service';
 import { VideoManager } from '@gitroom/nestjs-libraries/videos/video.manager';
+import { StudioRepository } from '@gitroom/nestjs-libraries/database/prisma/studio/studio.repository';
+import { StudioService } from '@gitroom/nestjs-libraries/database/prisma/studio/studio.service';
+import { StudioCatalogService } from '@gitroom/nestjs-libraries/studio/studio.catalog.service';
+import { KieProvider } from '@gitroom/nestjs-libraries/studio/providers/kie.provider';
 import { FalService } from '@gitroom/nestjs-libraries/openai/fal.service';
 import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integrations/refresh.integration.service';
 
@@ -93,6 +97,10 @@ import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integration
     ThirdPartyRepository,
     ThirdPartyService,
     VideoManager,
+    KieProvider,
+    StudioCatalogService,
+    StudioRepository,
+    StudioService,
   ],
   get exports() {
     return this.providers;

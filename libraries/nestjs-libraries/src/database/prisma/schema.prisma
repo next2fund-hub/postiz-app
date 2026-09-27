@@ -33,6 +33,7 @@ model Organization {
   submittedPost     Post[]             @relation("submittedForOrg")
   sets              Sets[]
   signatures        Signatures[]
+  studioJobs        StudioJob[]
   subscription      Subscription?
   tags              Tags[]
   thirdParty        ThirdParty[]
@@ -878,4 +879,56 @@ enum APPROVED_SUBMIT_FOR_ORDER {
   NO
   WAITING_CONFIRMATION
   YES
+}
+
+/// One generation request in the Studio: prompt in, asset out.
+///
+/// Generation is SLOW - a video model can run for minutes - and must survive
+/// the browser closing, so a job is a durable row rather than a held-open HTTP
+/// request. The API writes QUEUED and returns immediately; a worker moves it
+/// through RUNNING to a terminal state.
+///
+/// `params` holds the provider payload, validated against the model's catalog
+/// entry. Deliberately Json: every model takes a different shape, and pinning
+/// columns here would mean a migration per model.
+model StudioJob {
+  id             String          @id @default(uuid())
+  organizationId String
+  /// Catalog provider, e.g. "kie".
+  provider       String
+  /// Provider-side model id, e.g. "google/nano-banana". Free text, not an enum:
+  /// the catalog is data, and a model must be addable without a migration.
+  model          String
+  /// "image" | "video" - what this job produces, for filtering by Studio tab.
+  capability     String
+  status         StudioJobStatus @default(QUEUED)
+  prompt         String?
+  params         Json
+  /// "vertical" | "horizontal"
+  output         String?
+  /// Provider task id. Used to resume polling and to match webhook callbacks.
+  externalId     String?
+  resultUrls     Json?
+  /// Set once the finished asset has been copied into the Media library.
+  mediaId        String?
+  error          String?
+  attempts       Int             @default(0)
+  startedAt      DateTime?
+  finishedAt     DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
+  organization   Organization    @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId, status])
+  @@index([externalId])
+  @@index([organizationId, createdAt])
+}
+
+enum StudioJobStatus {
+  QUEUED
+  RUNNING
+  SUCCESS
+  FAILED
+  CANCELLED
 }
