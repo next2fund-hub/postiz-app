@@ -174,7 +174,40 @@ def clean(text, limit=160) -> str:
     return (out[: limit - 1] + "…") if len(out) > limit else out
 
 
+# Titlecasing the API field name gives "Input Urls", "Nsfw Checker",
+# "Camera Fixed" - which reads as a dump of someone else's API, because it is.
+# These are the ones users actually see, so they get written by hand.
+LABEL_OVERRIDES = {
+    "prompt": "Prompt",
+    "negative_prompt": "Avoid",
+    "image_urls": "Source image",
+    "input_urls": "Reference images",
+    "image_input": "Reference images",
+    "image_url": "Source image",
+    "reference_images": "Reference images",
+    "video_url": "Source video",
+    "first_frame": "First frame",
+    "last_frame": "Last frame",
+    "duration": "Duration",
+    "resolution": "Resolution",
+    "output_format": "File format",
+    "sound": "Generate audio",
+    "seed": "Seed",
+    "camera_fixed": "Lock the camera",
+    "nsfw_checker": "Filter explicit results",
+    "enable_safety_checker": "Safety filter",
+    "enable_prompt_expansion": "Expand my prompt",
+    "expand_prompt": "Expand my prompt",
+    "num_images": "How many",
+    "n": "How many",
+    "style": "Style",
+    "quality": "Quality",
+}
+
+
 def label_of(name: str) -> str:
+    if name in LABEL_OVERRIDES:
+        return LABEL_OVERRIDES[name]
     words = name.replace("_", " ").replace("-", " ").split()
     return " ".join(w if w.isupper() else w.capitalize() for w in words) or name
 

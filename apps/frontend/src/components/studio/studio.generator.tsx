@@ -129,7 +129,8 @@ export const StudioGenerator: FC<{
   }, [available, query]);
 
   const selected = useMemo(
-    () => available.find((m) => m.id === modelId) || filtered[0] || available[0],
+    () =>
+      available.find((m) => m.id === modelId) || filtered[0] || available[0],
     [available, filtered, modelId]
   );
 
@@ -238,75 +239,87 @@ export const StudioGenerator: FC<{
 
       <div className="flex gap-[20px] flex-col xl:flex-row">
         <div className="flex-1 flex flex-col gap-[20px]">
-          {/* Model grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-[12px] max-h-[330px] overflow-y-auto pe-[4px]">
-            {filtered.map((m) => {
-              const thumb = thumbs.get(m.id);
-              const active = selected?.id === m.id;
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  title={m.description}
-                  onClick={() => {
-                    setModelId(m.id);
-                    setShowAdvanced(false);
-                    form.reset({});
-                  }}
-                  className={clsx(
-                    'text-start rounded-[10px] overflow-hidden border transition-colors',
-                    active
-                      ? 'border-forth'
-                      : 'border-newTableBorder hover:border-forth/50'
-                  )}
-                >
-                  <div className="aspect-[4/3] w-full relative bg-newColColor">
-                    {thumb ? (
-                      capability === 'video' ? (
-                        <video
-                          src={thumb}
-                          muted
-                          playsInline
-                          preload="metadata"
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <img
-                          src={thumb}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      )
-                    ) : (
-                      <div
-                        className="w-full h-full"
-                        style={{
-                          background: `linear-gradient(135deg, hsl(${hueOf(
-                            m.id
-                          )} 45% 26%), hsl(${(hueOf(m.id) + 40) % 360} 45% 16%))`,
-                        }}
-                      />
-                    )}
-                    <div className="absolute bottom-[6px] start-[6px] text-[10px] px-[6px] py-[2px] rounded-[4px] bg-black/55 text-white">
-                      {MODE_LABEL[m.mode] || m.mode}
-                    </div>
-                  </div>
-                  <div
+          {/*
+            Model grid.
+
+            The scroll cap lives on this WRAPPER, never on the grid itself. A
+            CSS grid with a max-height shrinks its rows to fit instead of
+            overflowing, so putting the cap on the grid crushed every card to a
+            ~22px strip - and since each card clips its own overflow, that
+            showed as a thin colour bar with the model name cut off entirely.
+          */}
+          <div className="max-h-[420px] overflow-y-auto pe-[4px]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-[12px] auto-rows-max">
+              {filtered.map((m) => {
+                const thumb = thumbs.get(m.id);
+                const active = selected?.id === m.id;
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    title={m.description}
+                    onClick={() => {
+                      setModelId(m.id);
+                      setShowAdvanced(false);
+                      form.reset({});
+                    }}
                     className={clsx(
-                      'px-[10px] py-[8px] text-[13px] font-[500] truncate',
-                      active ? 'text-textItemFocused' : 'text-textItemBlur'
+                      'text-start rounded-[10px] overflow-hidden border transition-colors',
+                      active
+                        ? 'border-forth'
+                        : 'border-newTableBorder hover:border-forth/50'
                     )}
                   >
-                    {m.title}
-                  </div>
-                </button>
-              );
-            })}
-            {!filtered.length && (
-              <div className="text-[13px] text-textItemBlur">
-                No model matches that search.
-              </div>
-            )}
+                    <div className="aspect-[4/3] w-full relative bg-newColColor">
+                      {thumb ? (
+                        capability === 'video' ? (
+                          <video
+                            src={thumb}
+                            muted
+                            playsInline
+                            preload="metadata"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <img
+                            src={thumb}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        )
+                      ) : (
+                        <div
+                          className="w-full h-full"
+                          style={{
+                            background: `linear-gradient(135deg, hsl(${hueOf(
+                              m.id
+                            )} 45% 26%), hsl(${
+                              (hueOf(m.id) + 40) % 360
+                            } 45% 16%))`,
+                          }}
+                        />
+                      )}
+                      <div className="absolute bottom-[6px] start-[6px] text-[10px] px-[6px] py-[2px] rounded-[4px] bg-black/55 text-white">
+                        {MODE_LABEL[m.mode] || m.mode}
+                      </div>
+                    </div>
+                    <div
+                      className={clsx(
+                        'px-[10px] py-[8px] text-[13px] font-[500] truncate',
+                        active ? 'text-textItemFocused' : 'text-textItemBlur'
+                      )}
+                    >
+                      {m.title}
+                    </div>
+                  </button>
+                );
+              })}
+              {!filtered.length && (
+                <div className="text-[13px] text-textItemBlur">
+                  No model matches that search.
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Parameters for the selected model */}

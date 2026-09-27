@@ -40,7 +40,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "Input reference images (1-8 images).",
         required: true,
         type: "media",
@@ -67,7 +67,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -98,7 +98,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "Input reference images (1-8 images).",
         required: true,
         type: "media",
@@ -125,7 +125,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -174,7 +174,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -223,7 +223,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -254,7 +254,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "A description of what to discourage in the generated images (Max length: 5000 characters)",
         type: "textarea",
         maxLength: 5000,
@@ -293,7 +293,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "A description of what to discourage in the generated images (Max length: 5000 characters)",
         type: "textarea",
         maxLength: 5000,
@@ -331,7 +331,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "A description of what to discourage in the generated images (Max length: 5000 characters)",
         type: "textarea",
         maxLength: 5000,
@@ -370,7 +370,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Output format for the images",
         type: "select",
         options: [
@@ -440,7 +440,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -471,7 +471,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_input",
-        label: "Image Input",
+        label: "Reference images",
         description: "Input images to transform or use as reference (supports up to 14 images) (File URL after upload, not file content; Acce\u2026",
         type: "media",
         accept: "image",
@@ -500,7 +500,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Format of the output image",
         type: "select",
         options: [
@@ -542,7 +542,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Input image URL array.",
         type: "media",
         accept: "image",
@@ -575,7 +575,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "List of URLs of input images for editing,up to 10 images.",
         required: true,
         type: "media",
@@ -584,7 +584,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Output format for the images",
         type: "select",
         options: [
@@ -679,7 +679,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_input",
-        label: "Image Input",
+        label: "Reference images",
         description: "Input images to transform or use as reference (supports up to 8 images) (File URL after upload, not file content; Accep\u2026",
         type: "media",
         accept: "image",
@@ -708,7 +708,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Format of the output image",
         type: "select",
         options: [
@@ -749,7 +749,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "Array of input image URLs.",
         required: true,
         type: "media",
@@ -822,7 +822,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "Array of input image URLs.",
         required: true,
         type: "media",
@@ -960,7 +960,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "Array of input image URLs.",
         required: true,
         type: "media",
@@ -1098,7 +1098,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "Upload an image file to use as input for the API (File URL after upload, not file content; Accepted types: image/jpeg, \u2026",
         required: true,
         type: "media",
@@ -1256,7 +1256,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "An array containing up to 1 URL string pointing to reference images.",
         required: true,
         type: "media",
@@ -1265,7 +1265,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -1290,7 +1290,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -1326,7 +1326,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "An array containing up to 5 and at least 1 URL strings pointing to a reference image.",
         required: true,
         type: "media",
@@ -1461,13 +1461,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "expand_prompt",
-        label: "Expand Prompt",
+        label: "Expand my prompt",
         description: "Determine if MagicPrompt should be used in generating the request or not.",
         type: "boolean",
       },
       {
         name: "num_images",
-        label: "Num Images",
+        label: "How many",
         description: "Select description",
         type: "select",
         options: [
@@ -1531,7 +1531,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Description of what to exclude from an image.",
         type: "textarea",
         maxLength: 5000,
@@ -1558,7 +1558,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The image URL to generate an image from.",
         required: true,
         type: "text",
@@ -1622,13 +1622,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "expand_prompt",
-        label: "Expand Prompt",
+        label: "Expand my prompt",
         description: "Determine if MagicPrompt should be used in generating the request or not.",
         type: "boolean",
       },
       {
         name: "num_images",
-        label: "Num Images",
+        label: "How many",
         description: "Select description",
         type: "select",
         options: [
@@ -1679,7 +1679,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The image URL to remix (File URL after upload, not file content; Accepted types: image/jpeg, image/png, image/webp; Max\u2026",
         required: true,
         type: "text",
@@ -1736,7 +1736,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "expand_prompt",
-        label: "Expand Prompt",
+        label: "Expand my prompt",
         description: "Determine if MagicPrompt should be used in generating the request or not.",
         type: "boolean",
       },
@@ -1775,7 +1775,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "num_images",
-        label: "Num Images",
+        label: "How many",
         description: "Select description",
         type: "select",
         options: [
@@ -1815,14 +1815,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Description of what to exclude from an image.",
         type: "textarea",
         maxLength: 500,
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "A set of images to use as style references (maximum total size 10MB across all style references).",
         type: "media",
         accept: "image",
@@ -1855,7 +1855,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The image URL to generate an image from.",
         required: true,
         type: "text",
@@ -1890,7 +1890,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "expand_prompt",
-        label: "Expand Prompt",
+        label: "Expand my prompt",
         description: "Determine if MagicPrompt should be used in generating the request or not.",
         type: "boolean",
         default: true,
@@ -1923,7 +1923,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The image URL to remix.",
         required: true,
         type: "text",
@@ -1974,7 +1974,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "expand_prompt",
-        label: "Expand Prompt",
+        label: "Expand my prompt",
         description: "Determine if MagicPrompt should be used in generating the request or not.",
         type: "boolean",
       },
@@ -2012,7 +2012,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "num_images",
-        label: "Num Images",
+        label: "How many",
         description: "Number of images to generate.",
         type: "select",
         options: [
@@ -2050,7 +2050,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Description of what to exclude from the generated image.",
         type: "textarea",
         maxLength: 5000,
@@ -2121,7 +2121,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "expand_prompt",
-        label: "Expand Prompt",
+        label: "Expand my prompt",
         description: "Determines whether MagicPrompt should be used to enhance the generation request.",
         type: "boolean",
       },
@@ -2165,7 +2165,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Description of what to exclude from the generated image.",
         type: "textarea",
         maxLength: 5000,
@@ -2192,7 +2192,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image to edit.",
         required: true,
         type: "text",
@@ -2283,7 +2283,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "num_images",
-        label: "Num Images",
+        label: "How many",
         description: "num_images",
         type: "select",
         options: [
@@ -2307,13 +2307,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "If set to true, the safety checker will be enabled.",
         type: "boolean",
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The format of the generated image.",
         type: "select",
         options: [
@@ -2330,14 +2330,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt for the generation Default value: \" \" (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -2363,7 +2363,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The reference image to guide the generation (File URL after upload, not file content; Accepted types: image/jpeg, image\u2026",
         required: true,
         type: "text",
@@ -2379,7 +2379,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The format of the generated image",
         type: "select",
         options: [
@@ -2417,7 +2417,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt for the generation (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -2448,13 +2448,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "The safety checker is always enabled in Playground.",
         type: "boolean",
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -2537,13 +2537,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "The safety checker is always enabled in Playground.",
         type: "boolean",
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The format of the generated image",
         type: "select",
         options: [
@@ -2560,7 +2560,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt for the generation (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -2588,7 +2588,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -2614,7 +2614,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Reference images, given as an array of 1 to 10 http(s) URLs.",
         required: true,
         type: "media",
@@ -2663,7 +2663,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Output image format.",
         type: "select",
         options: [
@@ -2697,7 +2697,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -2762,7 +2762,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The output image format.",
         type: "select",
         options: [
@@ -2796,7 +2796,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -2827,7 +2827,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image to edit.",
         required: true,
         type: "text",
@@ -2881,7 +2881,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The format of the generated image.",
         type: "select",
         options: [
@@ -2898,7 +2898,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -2959,7 +2959,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The format of the generated image.",
         type: "select",
         options: [
@@ -2976,7 +2976,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -3002,7 +3002,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Input image URL array.",
         required: true,
         type: "media",
@@ -3069,7 +3069,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The generated image format.",
         type: "select",
         options: [
@@ -3093,14 +3093,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Whether to enable content filtering.",
         type: "boolean",
         default: false,
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt that describes content you do not want to appear in the image.",
         type: "textarea",
         maxLength: 5000,
@@ -3136,7 +3136,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Input image URL array.",
         required: true,
         type: "media",
@@ -3203,7 +3203,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The generated image format.",
         type: "select",
         options: [
@@ -3227,14 +3227,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Whether to enable content filtering.",
         type: "boolean",
         default: false,
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt that describes content you do not want to appear in the image.",
         type: "textarea",
         maxLength: 5000,
@@ -3327,7 +3327,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The generated image format.",
         type: "select",
         options: [
@@ -3351,14 +3351,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Whether to enable content filtering.",
         type: "boolean",
         default: false,
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt that describes content you do not want to appear in the image.",
         type: "textarea",
         maxLength: 5000,
@@ -3451,7 +3451,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "The generated image format.",
         type: "select",
         options: [
@@ -3475,14 +3475,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Whether to enable content filtering.",
         type: "boolean",
         default: false,
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "The negative prompt that describes content you do not want to appear in the image.",
         type: "textarea",
         maxLength: 5000,
@@ -3555,7 +3555,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The source image URL for layer separation.",
         required: true,
         type: "text",
@@ -3587,7 +3587,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Output format of the base image.",
         type: "select",
         options: [
@@ -3692,7 +3692,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "List of URLs of input images for editing.",
         required: true,
         type: "media",
@@ -3782,7 +3782,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -3889,7 +3889,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -3915,7 +3915,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Upload an image file to use as input for the API (File URL after upload, not file content; Accepted types: image/jpeg, \u2026",
         required: true,
         type: "media",
@@ -3942,7 +3942,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -3991,7 +3991,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4022,7 +4022,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Upload an image file to use as input for the API (File URL after upload, not file content; Accepted types: image/jpeg, \u2026",
         required: true,
         type: "media",
@@ -4053,7 +4053,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Format of the output image",
         type: "select",
         options: [
@@ -4070,7 +4070,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4123,7 +4123,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Format of the output image",
         type: "select",
         options: [
@@ -4140,7 +4140,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4171,7 +4171,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Upload an image file to use as input for the API (File URL after upload, not file content; Accepted types: image/jpeg, \u2026",
         required: true,
         type: "media",
@@ -4198,7 +4198,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Format of the output image",
         type: "select",
         options: [
@@ -4215,7 +4215,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4264,7 +4264,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Format of the output image",
         type: "select",
         options: [
@@ -4281,7 +4281,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4304,7 +4304,7 @@ export const KIE_MODELS: StudioModel[] = [
     fields: [
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Url of the image to be upscaled (File URL after upload, not file content; Accepted types: image/jpeg, image/png, image/\u2026",
         required: true,
         type: "text",
@@ -4353,7 +4353,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "(Optional) Array of input image URLs.",
         type: "media",
         accept: "image",
@@ -4368,7 +4368,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "n",
-        label: "N",
+        label: "How many",
         description: "Number of images to generate.",
         type: "number",
       },
@@ -4418,7 +4418,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4449,7 +4449,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "(Optional) Array of input image URLs.",
         type: "media",
         accept: "image",
@@ -4464,7 +4464,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "n",
-        label: "N",
+        label: "How many",
         description: "Number of images to generate.",
         type: "number",
       },
@@ -4514,7 +4514,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4545,7 +4545,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4576,7 +4576,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image used to generate video (File URL after upload, not file content; Accepted types: image/jpeg, image\u2026",
         required: true,
         type: "text",
@@ -4621,7 +4621,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "camera_fixed",
-        label: "Camera Fixed",
+        label: "Lock the camera",
         description: "Whether to fix the camera position (Boolean value (true/false))",
         type: "boolean",
       },
@@ -4636,7 +4636,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "The safety checker is always enabled in Playground.",
         type: "boolean",
       },
@@ -4648,7 +4648,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4712,7 +4712,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "camera_fixed",
-        label: "Camera Fixed",
+        label: "Lock the camera",
         description: "Whether to fix the camera position (Boolean value (true/false))",
         type: "boolean",
       },
@@ -4724,13 +4724,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "The safety checker is always enabled in Playground.",
         type: "boolean",
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4799,7 +4799,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "camera_fixed",
-        label: "Camera Fixed",
+        label: "Lock the camera",
         description: "Whether to fix the camera position (Boolean value (true/false))",
         type: "boolean",
       },
@@ -4814,13 +4814,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "The safety checker is always enabled in Playground.",
         type: "boolean",
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -4858,7 +4858,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "URLs of input images for image-to-video generation.",
         type: "media",
         accept: "image",
@@ -4901,7 +4901,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5019,7 +5019,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5129,7 +5129,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5232,7 +5232,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5340,7 +5340,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "output_format",
-        label: "Output Format",
+        label: "File format",
         description: "Video output format.",
         type: "select",
         options: [
@@ -5363,7 +5363,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5394,7 +5394,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image used to generate video (File URL after upload, not file content; Accepted types: image/jpeg, image\u2026",
         required: true,
         type: "text",
@@ -5435,7 +5435,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5461,7 +5461,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image used to generate video (File URL after upload, not file content; Accepted types: image/jpeg, image\u2026",
         required: true,
         type: "text",
@@ -5506,7 +5506,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "camera_fixed",
-        label: "Camera Fixed",
+        label: "Lock the camera",
         description: "Whether to fix the camera position (Boolean value (true/false))",
         type: "boolean",
       },
@@ -5521,13 +5521,13 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_safety_checker",
-        label: "Enable Safety Checker",
+        label: "Safety filter",
         description: "The safety checker is always enabled in Playground.",
         type: "boolean",
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5578,7 +5578,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "An array of image URLs.",
         type: "media",
         accept: "image",
@@ -5692,7 +5692,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Array of image URLs.",
         type: "media",
         accept: "image",
@@ -5843,7 +5843,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Provide an external image URL as a reference for video generation.",
         type: "media",
         accept: "image",
@@ -5915,7 +5915,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -5993,7 +5993,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6023,7 +6023,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Upload image files to be used as API input.",
         type: "media",
         accept: "image",
@@ -6061,7 +6061,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6092,7 +6092,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Input image to animate (File URL after upload, not file content; Accepted types: image/jpeg, image/png, image/webp; Max\u2026",
         required: true,
         type: "text",
@@ -6133,7 +6133,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6159,7 +6159,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Input image to animate (File URL after upload, not file content; Accepted types: image/jpeg, image/png, image/webp; Max\u2026",
         required: true,
         type: "text",
@@ -6200,7 +6200,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6226,7 +6226,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Input image to animate (File URL after upload, not file content; Accepted types: image/jpeg, image/png, image/webp; Max\u2026",
         required: true,
         type: "text",
@@ -6245,7 +6245,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6277,7 +6277,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6303,7 +6303,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image to use as the first frame of the video (File URL after upload, not file content; Accepted types: i\u2026",
         required: true,
         type: "text",
@@ -6356,7 +6356,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6405,7 +6405,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -6623,7 +6623,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "video_url",
-        label: "Video Url",
+        label: "Source video",
         description: "Input video URL list.",
         required: true,
         type: "text",
@@ -6701,7 +6701,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "The URL of the first frame image.",
         required: true,
         type: "media",
@@ -6869,7 +6869,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the input image.",
         required: true,
         type: "text",
@@ -6926,7 +6926,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the image to be used for the video (File URL after upload, not file content; Accepted types: image/jpeg, image/p\u2026",
         required: true,
         type: "text",
@@ -6950,7 +6950,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt to exclude certain elements from the video (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -7009,7 +7009,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Things to avoid in the generated video (Max length: 2500 characters)",
         type: "textarea",
         maxLength: 2500,
@@ -7050,7 +7050,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "URL of the image to be used for the video (File URL after upload, not file content; Accepted types: image/jpeg, image/p\u2026",
         required: true,
         type: "media",
@@ -7155,7 +7155,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Image URLs for video generation.",
         required: true,
         type: "media",
@@ -7164,7 +7164,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "sound",
-        label: "Sound",
+        label: "Generate audio",
         description: "This parameter specifies whether the generated video contains sound (boolean: true/false)",
         required: true,
         type: "boolean",
@@ -7208,7 +7208,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "An array containing a single image URL.",
         required: true,
         type: "media",
@@ -7282,7 +7282,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "sound",
-        label: "Sound",
+        label: "Generate audio",
         description: "This parameter specifies whether the generated video contains sound (boolean: true/false)",
         required: true,
         type: "boolean",
@@ -7331,7 +7331,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "sound",
-        label: "Sound",
+        label: "Generate audio",
         description: "Whether to enable sound effects.",
         required: true,
         type: "boolean",
@@ -7431,7 +7431,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "First and last frame image URLs.",
         type: "media",
         accept: "image",
@@ -7598,7 +7598,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Array of image URLs.",
         type: "media",
         accept: "image",
@@ -7674,7 +7674,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image to use as your avatar (File URL after upload, not file content; Accepted types: image/jpeg, image/\u2026",
         required: true,
         type: "text",
@@ -7708,7 +7708,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "The URL of the image to use as your avatar (File URL after upload, not file content; Accepted types: image/jpeg, image/\u2026",
         required: true,
         type: "text",
@@ -7742,7 +7742,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the image to be used for the video (File URL after upload, not file content; Accepted types: image/jpeg, image/p\u2026",
         required: true,
         type: "text",
@@ -7766,7 +7766,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt to exclude certain elements from the video (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -7819,7 +7819,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Elements to avoid in the generated video (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -7860,7 +7860,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the image to be used for the video (File URL after upload, not file content; Accepted types: image/jpeg, image/p\u2026",
         required: true,
         type: "text",
@@ -7884,7 +7884,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Terms to avoid in the generated video (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -7926,7 +7926,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the image to be used for the video (File URL after upload, not file content; Accepted types: image/jpeg, image/p\u2026",
         required: true,
         type: "text",
@@ -7950,7 +7950,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Description of elements to avoid in the generated video (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -7984,7 +7984,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "input_urls",
-        label: "Input Urls",
+        label: "Reference images",
         description: "(Required) Include a URL of an image",
         required: true,
         type: "media",
@@ -8371,7 +8371,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Portrait image URL. Supports any aspect ratio with subjects including people, pets, anime, etc. Accepted file types: im\u2026",
         required: true,
         type: "text",
@@ -8436,7 +8436,7 @@ export const KIE_MODELS: StudioModel[] = [
     fields: [
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Portrait image URL. Requirements: JPG/PNG/JPEG format, less than 5MB, resolution under 4096x4096. Recommended: single p\u2026",
         required: true,
         type: "text",
@@ -8455,7 +8455,7 @@ export const KIE_MODELS: StudioModel[] = [
     fields: [
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "Portrait image URL. Supports detection of up to 5 subjects in the image. Accepted file types: image/jpeg, image/png, im\u2026",
         required: true,
         type: "text",
@@ -8643,7 +8643,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Image URLs, supports up to 2 images, single image size not exceeding 20 MB.",
         required: true,
         type: "media",
@@ -9012,7 +9012,7 @@ export const KIE_MODELS: StudioModel[] = [
     fields: [
       {
         name: "video_url",
-        label: "Video Url",
+        label: "Source video",
         description: "URL of the video to upscale (File URL after upload, not file content; Accepted types: video/mp4, video/quicktime, video\u2026",
         required: true,
         type: "text",
@@ -9069,7 +9069,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "video_url",
-        label: "Video Url",
+        label: "Source video",
         description: "Video URL. Supported resolution: 360p\u20131080p. Videos above 1080p will be compressed to 1080p, while videos below 360p ar\u2026",
         required: true,
         type: "text",
@@ -9193,7 +9193,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9219,7 +9219,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the input image.",
         required: true,
         type: "text",
@@ -9243,7 +9243,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_prompt_expansion",
-        label: "Enable Prompt Expansion",
+        label: "Expand my prompt",
         description: "Whether to enable prompt expansion.",
         type: "boolean",
       },
@@ -9275,7 +9275,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9301,7 +9301,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the input image.",
         required: true,
         type: "text",
@@ -9354,7 +9354,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt for video generation (Max length: 500 characters)",
         type: "textarea",
         maxLength: 500,
@@ -9394,7 +9394,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9437,7 +9437,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "enable_prompt_expansion",
-        label: "Enable Prompt Expansion",
+        label: "Expand my prompt",
         description: "Whether to enable prompt expansion.",
         type: "boolean",
       },
@@ -9469,7 +9469,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9500,7 +9500,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "A list of image URLs.",
         required: true,
         type: "media",
@@ -9560,7 +9560,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9578,14 +9578,14 @@ export const KIE_MODELS: StudioModel[] = [
     fields: [
       {
         name: "video_url",
-        label: "Video Url",
+        label: "Source video",
         description: "URL of the input video.",
         required: true,
         type: "text",
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the input image.",
         required: true,
         type: "text",
@@ -9613,7 +9613,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9631,14 +9631,14 @@ export const KIE_MODELS: StudioModel[] = [
     fields: [
       {
         name: "video_url",
-        label: "Video Url",
+        label: "Source video",
         description: "URL of the input video.",
         required: true,
         type: "text",
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the input image.",
         required: true,
         type: "text",
@@ -9666,7 +9666,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9692,7 +9692,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_url",
-        label: "Image Url",
+        label: "Source image",
         description: "URL of the image to use as the first frame.",
         required: true,
         type: "text",
@@ -9732,14 +9732,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt used to describe content to avoid.",
         type: "textarea",
         maxLength: 500,
       },
       {
         name: "enable_prompt_expansion",
-        label: "Enable Prompt Expansion",
+        label: "Expand my prompt",
         description: "Whether to enable prompt rewriting using LLM.",
         type: "boolean",
       },
@@ -9751,7 +9751,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9810,14 +9810,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt used to describe content to avoid.",
         type: "textarea",
         maxLength: 500,
       },
       {
         name: "enable_prompt_expansion",
-        label: "Enable Prompt Expansion",
+        label: "Expand my prompt",
         description: "Whether to enable prompt rewriting using LLM.",
         type: "boolean",
       },
@@ -9829,7 +9829,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -9860,7 +9860,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "image_urls",
-        label: "Image Urls",
+        label: "Source image",
         description: "Upload an image file to use as input for the API (File URL after upload, not file content; Accepted types: image/jpeg, \u2026",
         required: true,
         type: "media",
@@ -9979,7 +9979,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -10055,7 +10055,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -10081,7 +10081,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt. Maximum length: 500 characters.",
         type: "textarea",
         maxLength: 500,
@@ -10160,7 +10160,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -10186,7 +10186,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Optional negative prompt describing what should not appear in the video.",
         type: "textarea",
         maxLength: 500,
@@ -10209,7 +10209,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "first_frame",
-        label: "First Frame",
+        label: "First frame",
         description: "First frame image URL.",
         type: "text",
       },
@@ -10294,7 +10294,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Negative prompt. Maximum length: 500 characters.",
         type: "textarea",
         maxLength: 500,
@@ -10384,7 +10384,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -10409,14 +10409,14 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "video_url",
-        label: "Video Url",
+        label: "Source video",
         description: "URL of the source video to edit.",
         required: true,
         type: "text",
       },
       {
         name: "negative_prompt",
-        label: "Negative Prompt",
+        label: "Avoid",
         description: "Optional negative prompt describing content that should not appear in the video.",
         type: "textarea",
         maxLength: 500,
@@ -10494,7 +10494,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -10567,7 +10567,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
@@ -10640,7 +10640,7 @@ export const KIE_MODELS: StudioModel[] = [
       },
       {
         name: "nsfw_checker",
-        label: "Nsfw Checker",
+        label: "Filter explicit results",
         description: "Defaults to false. You can set it to false based on your needs. If set to false, our content filtering will be disabled\u2026",
         type: "boolean",
       },
