@@ -1,4 +1,4 @@
-import { StudioPlaceholder } from '@gitroom/frontend/components/new-layout/studio.placeholder';
+import { StudioGenerator } from '@gitroom/frontend/components/studio/studio.generator';
 import { Metadata } from 'next';
 import { isGeneralServerSide } from '@gitroom/helpers/utils/is.general.server.side';
 
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <StudioPlaceholder section="Images" />;
+  return <StudioGenerator capability="image" title="Images" />;
 }
