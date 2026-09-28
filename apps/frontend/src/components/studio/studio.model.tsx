@@ -84,13 +84,13 @@ export const StudioModelPage: FC<{
       <button
         type="button"
         onClick={onBack}
-        className="self-start text-[13px] text-textItemBlur hover:text-textItemFocused"
+        className="self-start text-[13px] text-textItemBlur hover:text-textColor"
       >
         &larr; All models
       </button>
 
       <div className="flex items-baseline gap-[10px] flex-wrap">
-        <h1 className="text-[20px] font-[600] text-textItemFocused">
+        <h1 className="text-[20px] font-[600] text-textColor">
           {model.title}
         </h1>
         <span className="text-[10px] tracking-wide text-textItemBlur">
@@ -160,7 +160,7 @@ export const StudioModelPage: FC<{
                   <button
                     type="button"
                     onClick={() => setShowAdvanced((s) => !s)}
-                    className="self-start text-[12px] text-textItemBlur hover:text-textItemFocused"
+                    className="self-start text-[12px] text-textItemBlur hover:text-textColor"
                   >
                     {showAdvanced ? '▾' : '▸'} Advanced ({advanced.length})
                   </button>

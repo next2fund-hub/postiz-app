@@ -104,7 +104,7 @@ export const StudioGenerator: FC<{
   if (!available.length) {
     return (
       <div className="flex flex-col gap-[16px]">
-        <h1 className="text-[20px] font-[600] text-textItemFocused">{title}</h1>
+        <h1 className="text-[20px] font-[600] text-textColor">{title}</h1>
         <div className="p-[24px] rounded-[12px] bg-newBgColorInner border border-newTableBorder text-[14px] text-textItemBlur">
           No {capability} models are available. Each model needs its provider
           API key set on the server.
@@ -113,7 +113,7 @@ export const StudioGenerator: FC<{
               {' '}
               {models.length} model{models.length > 1 ? 's are' : ' is'} in the
               catalog but unavailable &mdash; set{' '}
-              <code className="text-textItemFocused">KIEAI_API_KEY</code> to
+              <code className="text-textColor">KIEAI_API_KEY</code> to
               enable kie.ai.
             </>
           )}

@@ -150,7 +150,7 @@ const StudioMediaInput: FC<{ field: StudioFieldSpec }> = ({ field }) => {
         accept={field.accept === 'video' ? 'video/*' : 'image/*'}
         disabled={busy || full}
         onChange={(e) => upload(e.target.files)}
-        className="block w-full text-[13px] text-textItemBlur file:me-[10px] file:px-[12px] file:py-[7px] file:rounded-[6px] file:border file:border-newTableBorder file:bg-newColColor file:text-textItemFocused file:text-[13px] file:cursor-pointer disabled:opacity-50"
+        className="block w-full text-[13px] text-textItemBlur file:me-[10px] file:px-[12px] file:py-[7px] file:rounded-[6px] file:border file:border-newTableBorder file:bg-newColColor file:text-textColor file:text-[13px] file:cursor-pointer disabled:opacity-50"
       />
 
       {busy && (

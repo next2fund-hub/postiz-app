@@ -17,8 +17,8 @@ export const StudioPlaceholder: FC<{ section: string }> = ({ section }) => {
   return (
     <div className="flex flex-col gap-[16px]">
       <div className="flex items-center gap-[12px]">
-        <span className="text-textItemFocused">{link?.icon}</span>
-        <h1 className="text-[24px] font-[600] text-textItemFocused">{section}</h1>
+        <span className="text-textColor">{link?.icon}</span>
+        <h1 className="text-[24px] font-[600] text-textColor">{section}</h1>
       </div>
       <div className="p-[24px] rounded-[12px] bg-newBgColorInner border border-newTableBorder">
         <div className="text-[14px] text-textItemBlur">

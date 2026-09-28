@@ -43,7 +43,7 @@ export const TASK_LABEL: Record<string, string> = {
 
 export const STATUS_STYLE: Record<string, string> = {
   QUEUED: 'bg-newColColor text-textItemBlur',
-  RUNNING: 'bg-newColColor text-textItemFocused',
+  RUNNING: 'bg-newColColor text-textColor',
   SUCCESS: 'bg-green-900/40 text-green-300',
   FAILED: 'bg-red-900/40 text-red-300',
   CANCELLED: 'bg-newColColor text-textItemBlur',

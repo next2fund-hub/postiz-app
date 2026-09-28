@@ -65,13 +65,13 @@ export const StudioBrowser: FC<{
       'text-[11px] px-[10px] py-[4px] rounded-full border transition-colors whitespace-nowrap',
       active
         ? 'bg-forth text-white border-forth'
-        : 'border-newTableBorder text-textItemBlur hover:text-textItemFocused'
+        : 'border-newTableBorder text-textItemBlur hover:text-textColor'
     );
 
   return (
     <div className="flex flex-col gap-[14px]">
       <div className="flex items-center gap-[12px] flex-wrap">
-        <h1 className="text-[20px] font-[600] text-textItemFocused">
+        <h1 className="text-[20px] font-[600] text-textColor">
           All models
         </h1>
         <span className="text-[12px] text-textItemBlur">
@@ -186,7 +186,7 @@ export const StudioBrowser: FC<{
                     it, and repeating it pushed the vendor name onto the card
                     three times while saying nothing about the model.
                   */}
-                  <div className="text-[12px] font-[600] text-textItemFocused truncate">
+                  <div className="text-[12px] font-[600] text-textColor truncate">
                     {m.title}
                   </div>
                   <div className="text-[10px] text-textItemBlur truncate">
